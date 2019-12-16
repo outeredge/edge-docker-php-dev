@@ -8,7 +8,9 @@ RUN sudo chgrp -R 0 /home && \
         mysql-client \
         libsass \
         php7-gd \
-        php7-pecl-imagick
+        php7-pecl-imagick && \
+    sudo wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun && \
+    sudo chmod +x /usr/local/bin/magerun
 
 WORKDIR /projects
 
