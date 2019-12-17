@@ -1,11 +1,10 @@
 #!/bin/bash -e
 
-CURRENT_UID="$(id -u)"
-CURRENT_GID="$(id -g)"
-
-if [ ${CURRENT_GID} -ne 1000 ]; then
-  if ! whoami &> /dev/null; then
-    echo "edge:x:${CURRENT_UID}:0:edge:/home/edge:/bin/bash" >> /etc/passwd
+if ! whoami &> /dev/null; then
+  if [ -w /etc/passwd ]; then
+     sed "s/^edge:x:1000:1000:/edge:x:$(id -u):1000:/" /etc/passwd > /tmp/passwd
+     cat /tmp/passwd > /etc/passwd
+     rm /tmp/passwd
   fi
 fi
 
