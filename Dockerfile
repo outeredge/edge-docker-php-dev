@@ -2,8 +2,7 @@ FROM outeredge/edge-docker-magento:2.3.3 AS magento
 
 FROM outeredge/edge-docker-php:7.2-alpine
 
-RUN sudo chgrp -R 0 /home && \
-    sudo chmod -R g=u /etc/passwd /home && \
+RUN sudo chmod g=u /etc/passwd && \
     sudo apk add --no-cache \
         mysql-client \
         libsass \
