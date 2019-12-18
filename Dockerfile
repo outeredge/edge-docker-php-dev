@@ -17,7 +17,4 @@ COPY --from=magento /magento.sh /
 COPY --from=magento /etc/nginx/magento_default.conf /etc/nginx/
 COPY --from=magento /templates/nginx-default.conf.j2 /templates/
 
-COPY entrypoint-dev.sh /
-ENTRYPOINT ["/entrypoint-dev.sh"]
-
 CMD ["/magento.sh"]
