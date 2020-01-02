@@ -2,7 +2,8 @@ FROM outeredge/edge-docker-magento:1.9.4.3-php7 AS magento
 FROM outeredge/edge-docker-php:7.2-alpine
 
 ENV UNISON=/projects/.unison \
-    UNISONLOCALHOSTNAME=dev-server
+    UNISONLOCALHOSTNAME=dev-server \
+    APPLICATION_ENV=dev
 
 RUN sudo chmod g=u /etc/passwd && \
     sudo apk add --no-cache \
