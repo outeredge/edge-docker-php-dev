@@ -1,5 +1,5 @@
-FROM outeredge/edge-docker-magento:2.3.3 AS magento
-FROM outeredge/edge-docker-php:7.2-alpine
+FROM outeredge/edge-docker-magento:2.2.10 AS magento
+FROM outeredge/edge-docker-php:7.1-alpine
 
 ENV UNISON=/projects/.unison \
     UNISONLOCALHOSTNAME=dev-server
@@ -9,7 +9,6 @@ RUN sudo chmod g=u /etc/passwd && \
         mysql-client \
         libsass \
         php7-gd \
-        php7-pecl-imagick \
         unison && \
     sudo wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun && \
     sudo chmod +x /usr/local/bin/magerun
