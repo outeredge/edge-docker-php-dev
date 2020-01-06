@@ -10,6 +10,7 @@ RUN sudo chmod g=u /etc/passwd && \
         mysql-client \
         libsass \
         php7-gd \
+        php7-iconv \
         unison && \
     sudo wget https://files.magerun.net/n98-magerun.phar -O /usr/local/bin/magerun && \
     sudo chmod +x /usr/local/bin/magerun
