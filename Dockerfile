@@ -1,7 +1,8 @@
 FROM outeredge/edge-docker-magento:2.2.10 AS magento
 FROM outeredge/edge-docker-php:7.1-alpine
 
-ENV UNISON=/projects/.unison \
+ENV PHP_DISPLAY_ERRORS=On \
+    UNISON=/projects/.unison \
     UNISONLOCALHOSTNAME=dev-server
 
 RUN sudo apk add --no-cache \
