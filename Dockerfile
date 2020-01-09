@@ -10,6 +10,7 @@ RUN sudo apk add --no-cache \
         libsass \
         php7-gd \
         php7-iconv \
+        coreutils \
         unison && \
     sudo wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 && \
     sudo chmod +x /usr/local/bin/magerun2 && \
