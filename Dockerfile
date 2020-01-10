@@ -9,7 +9,6 @@ RUN sudo apk add --no-cache \
         mysql-client \
         libsass \
         php7-gd \
-        php7-iconv \
         coreutils \
         unison && \
     sudo wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 && \
