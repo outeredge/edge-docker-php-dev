@@ -5,3 +5,4 @@ source /etc/profile.d/bash_completion.sh
 source /etc/profile.d/n98-magerun2.phar.bash
 alias magento="$MAGE_ROOT/bin/magento"
 alias magerun2="magerun2 --root-dir=$MAGE_ROOT"
+[ ! -z "$MAGE_ROOT" ] && cd $MAGE_ROOT
