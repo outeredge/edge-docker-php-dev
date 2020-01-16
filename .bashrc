@@ -3,4 +3,4 @@ export VISUAL=nano
 export EDITOR="$VISUAL"
 source /etc/profile.d/bash_completion.sh
 source /etc/profile.d/n98-magerun.phar.bash
-
+[ ! -z "$MAGE_ROOT" ] && cd $MAGE_ROOT
