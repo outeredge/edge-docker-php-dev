@@ -6,8 +6,9 @@ ENV PHP_DISPLAY_ERRORS=On \
     UNISONLOCALHOSTNAME=dev-server
 
 RUN sudo apk add --no-cache \
-        mysql-client \
+        jq \
         libsass \
+        mysql-client \        
         php7-gd \
         php7-pecl-imagick \
         unison && \
