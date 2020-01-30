@@ -1,5 +1,5 @@
-FROM outeredge/edge-docker-magento:1.9.4.3-php7 AS magento
-FROM outeredge/edge-docker-php:7.1-alpine
+FROM outeredge/edge-docker-magento:1.9.4.4 AS magento
+FROM outeredge/edge-docker-php:5.6-alpine
 
 ENV PHP_DISPLAY_ERRORS=On \
     APPLICATION_ENV=dev \
@@ -10,7 +10,7 @@ ENV PHP_DISPLAY_ERRORS=On \
 RUN sudo apk add --no-cache \
         mysql-client \
         libsass \
-        php7-gd \
+        php5-gd \
         coreutils \
         unison && \
     sudo wget https://files.magerun.net/n98-magerun.phar -O /usr/local/bin/magerun && \
