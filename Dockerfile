@@ -9,10 +9,12 @@ ENV PHP_DISPLAY_ERRORS=On \
 
 RUN sudo apk add --no-cache \
         mysql-client \
+        less \
         libsass \
         php5-gd \
         coreutils \
         unison && \
+    sudo wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -P /usr/share/git-core/contrib && \
     sudo wget https://files.magerun.net/n98-magerun.phar -O /usr/local/bin/magerun && \
     sudo chmod +x /usr/local/bin/magerun && \
     sudo wget https://raw.githubusercontent.com/netz98/n98-magerun/master/res/autocompletion/bash/n98-magerun.phar.bash -P /etc/profile.d && \
