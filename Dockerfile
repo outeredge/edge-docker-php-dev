@@ -2,6 +2,7 @@ FROM outeredge/edge-docker-magento:2.3.4 AS magento
 FROM outeredge/edge-docker-php:7.2-alpine
 
 ENV PHP_DISPLAY_ERRORS=On \
+    CHROME_HOST=http://chrome.default:9222 \
     UNISON=/projects/.unison \
     UNISONLOCALHOSTNAME=dev-server
 
@@ -13,7 +14,6 @@ RUN sudo apk add --no-cache \
         php7-gd \
         php7-pecl-imagick \
         unison && \
-    sudo wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -P /usr/share/git-core/contrib && \
     sudo wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 && \
     sudo chmod +x /usr/local/bin/magerun2 && \
     sudo wget https://raw.githubusercontent.com/netz98/n98-magerun2/master/res/autocompletion/bash/n98-magerun2.phar.bash -P /etc/profile.d && \
@@ -27,5 +27,6 @@ COPY --from=magento /templates/nginx-default.conf.j2 /templates/
 
 COPY --chown=edge /.bashrc /home/edge/.bashrc
 COPY /dev.sh /
+COPY /che.sh /etc/profile.d/
 
 CMD ["/dev.sh"]
