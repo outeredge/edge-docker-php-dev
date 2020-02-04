@@ -2,6 +2,7 @@ FROM outeredge/edge-docker-magento:2.2.10 AS magento
 FROM outeredge/edge-docker-php:7.1-alpine
 
 ENV PHP_DISPLAY_ERRORS=On \
+    CHROME_HOST=http://chrome.default:9222 \
     UNISON=/projects/.unison \
     UNISONLOCALHOSTNAME=dev-server
 
@@ -25,5 +26,6 @@ COPY --from=magento /templates/nginx-default.conf.j2 /templates/
 
 COPY --chown=edge /.bashrc /home/edge/.bashrc
 COPY /dev.sh /
+COPY /che.sh /etc/profile.d/
 
 CMD ["/dev.sh"]
