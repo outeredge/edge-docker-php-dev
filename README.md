@@ -1,3 +1,3 @@
-# edge-docker-magento-dev
+# edge-docker-dev
 
-Magento development image
+PHP development image
