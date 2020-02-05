@@ -20,9 +20,8 @@ RUN sudo apk add --no-cache \
 
 WORKDIR /projects
 
-COPY --from=magento /magento.sh /
 COPY --from=magento /etc/nginx/magento_default.conf /etc/nginx/
-COPY --from=magento /templates/nginx-default.conf.j2 /templates/
+COPY --from=magento /templates/nginx-magento.conf.j2 /templates/
 
 COPY --chown=edge /.bashrc /home/edge/.bashrc
 COPY /dev.sh /
