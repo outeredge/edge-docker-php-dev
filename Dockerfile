@@ -9,9 +9,10 @@ ENV PHP_DISPLAY_ERRORS=On \
     UNISONLOCALHOSTNAME=dev-server
 
 RUN sudo apk add --no-cache \
-        mysql-client \
+        jq \
         less \
         libsass \
+        mysql-client \
         php5-gd \
         coreutils \
         unison && \
