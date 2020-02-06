@@ -26,6 +26,5 @@ COPY --from=magento /templates/nginx-magento.conf.j2 /templates/
 
 COPY --chown=edge /.bashrc /home/edge/.bashrc
 COPY /dev.sh /
-COPY /che.sh /etc/profile.d/
 
 CMD ["/dev.sh"]
