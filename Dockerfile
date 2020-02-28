@@ -26,7 +26,7 @@ WORKDIR /projects
 COPY --from=magento1 /etc/nginx/magento_security.conf /etc/nginx/
 COPY --from=magento1 /templates/nginx-magento.conf.j2 /templates/nginx-magento1.conf.j2
 
-COPY --chown=edge /.bashrc /home/edge/.bashrc
+COPY --chown=edge /.bash* /home/edge/
 COPY /dev.sh /
 
 CMD ["/dev.sh"]
