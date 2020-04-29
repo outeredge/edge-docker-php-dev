@@ -1,5 +1,5 @@
-FROM outeredge/edge-docker-magento:2.3.4 AS magento
-FROM outeredge/edge-docker-php:7.2-alpine
+FROM outeredge/edge-docker-magento:2.3.5 AS magento
+FROM outeredge/edge-docker-php:7.3-alpine
 
 ENV PHP_DISPLAY_ERRORS=On \
     CHROME_HOST=http://chrome.default:9222 \
