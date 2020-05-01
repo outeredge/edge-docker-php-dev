@@ -1,8 +1,11 @@
 FROM outeredge/edge-docker-magento:2.3.4 AS magento
+FROM outeredge/edge-docker-magento:1.9.4.4-php7 AS magento1
 FROM outeredge/edge-docker-php:7.2-alpine
 
 ENV PHP_DISPLAY_ERRORS=On \
     CHROME_HOST=http://chrome.default:9222 \
+    APPLICATION_ENV=dev \
+    MAGE_IS_DEVELOPER_MODE=true \
     UNISON=/projects/.unison \
     UNISONLOCALHOSTNAME=dev-server
 
@@ -10,7 +13,7 @@ RUN sudo apk add --no-cache \
         jq \
         less \
         libsass \
-        mysql-client \        
+        mysql-client \
         php7-gd \
         php7-pecl-imagick \
         unison && \
@@ -23,6 +26,8 @@ WORKDIR /projects
 
 COPY --from=magento /etc/nginx/magento_default.conf /etc/nginx/
 COPY --from=magento /templates/nginx-magento.conf.j2 /templates/
+COPY --from=magento1 /etc/nginx/magento_security.conf /etc/nginx/
+COPY --from=magento1 /templates/nginx-magento.conf.j2 /templates/nginx-magento1.conf.j2
 
 COPY --chown=edge /.bash* /home/edge/
 COPY /dev.sh /
