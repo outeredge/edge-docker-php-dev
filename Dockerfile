@@ -1,4 +1,4 @@
-FROM outeredge/edge-docker-magento:2.3.4 AS magento
+FROM outeredge/edge-docker-magento:2.3.5 AS magento
 FROM outeredge/edge-docker-magento:1.9.4.4-php7 AS magento1
 FROM outeredge/edge-docker-php:7.2-alpine
 
