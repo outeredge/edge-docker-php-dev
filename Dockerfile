@@ -7,6 +7,7 @@ ENV PHP_DISPLAY_ERRORS=On \
     UNISONLOCALHOSTNAME=dev-server
 
 RUN sudo apk add --no-cache \
+        build-base \
         jq \
         less \
         libsass \
