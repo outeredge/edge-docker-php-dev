@@ -3,11 +3,8 @@ FROM outeredge/edge-docker-magento:1.9.4.4-php7 AS magento1
 FROM outeredge/edge-docker-php:7.2-alpine
 
 ENV PHP_DISPLAY_ERRORS=On \
-    CHROME_HOST=http://chrome.default:9222 \
     APPLICATION_ENV=dev \
-    MAGE_IS_DEVELOPER_MODE=true \
-    UNISON=/projects/.unison \
-    UNISONLOCALHOSTNAME=dev-server
+    MAGE_IS_DEVELOPER_MODE=true
 
 RUN sudo apk add --no-cache \
         build-base \
