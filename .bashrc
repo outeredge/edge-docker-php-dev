@@ -4,6 +4,7 @@ export PS1='\[\033[01;32m\]\[\033[0m\033[0;32m\]\[\033[01;32m\]\u\[\033[00m\]:\[
 export VISUAL=nano
 export EDITOR="$VISUAL"
 export CHROME_HOST=http://chrome.default:9222
+export COMPOSER_MEMORY_LIMIT=-1
 export UNISON=/projects/.unison
 export UNISONLOCALHOSTNAME=dev-server
 export RUNTIME_URL=$(cat /tmp/runtime.url)
