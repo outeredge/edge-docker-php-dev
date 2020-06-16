@@ -4,7 +4,8 @@ FROM outeredge/edge-docker-php:7.2-alpine
 
 ENV PHP_DISPLAY_ERRORS=On \
     APPLICATION_ENV=dev \
-    MAGE_IS_DEVELOPER_MODE=true
+    MAGE_IS_DEVELOPER_MODE=true \
+    XDEBUG_ENABLE=On
 
 RUN sudo apk add --no-cache \
         build-base \
