@@ -2,6 +2,7 @@ FROM outeredge/edge-docker-magento:2.3.5-php73 AS magento
 FROM outeredge/edge-docker-php:7.3-alpine
 
 ENV PHP_DISPLAY_ERRORS=On \
+    ENABLE_REDIS=On \
     XDEBUG_ENABLE=On
 
 RUN sudo apk add --no-cache \
