@@ -7,7 +7,8 @@ ENV PHP_DISPLAY_ERRORS=On \
 
 RUN sudo apk add --no-cache \
         build-base \
-        jq \
+        imagemagick \
+        jq \        
         less \
         libsass \
         mysql-client \        
