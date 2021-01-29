@@ -22,6 +22,7 @@ RUN sudo apk add --no-cache \
 
 WORKDIR /projects
 
+COPY --from=magento /templates/magento.conf.j2 /templates/
 COPY --from=magento /templates/nginx-vsf.conf.j2 /templates/
 COPY --from=magento /templates/nginx-magento.conf.j2 /templates/
 
