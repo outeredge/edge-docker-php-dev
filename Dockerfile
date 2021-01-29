@@ -8,10 +8,10 @@ ENV PHP_DISPLAY_ERRORS=On \
 RUN sudo apk add --no-cache \
         build-base \
         imagemagick \
-        jq \        
+        jq \
         less \
         libsass \
-        mysql-client \        
+        mysql-client \
         php7-gd \
         php7-pecl-imagick \
         unison && \
@@ -22,7 +22,7 @@ RUN sudo apk add --no-cache \
 
 WORKDIR /projects
 
-COPY --from=magento /etc/nginx/magento_default.conf /etc/nginx/
+COPY --from=magento /templates/nginx-vsf.conf.j2 /templates/
 COPY --from=magento /templates/nginx-magento.conf.j2 /templates/
 
 COPY --chown=edge /.bash* /home/edge/
