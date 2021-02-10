@@ -1,4 +1,4 @@
-FROM outeredge/edge-docker-magento:2.4.1 AS magento
+FROM outeredge/edge-docker-magento:2.4.2 AS magento
 FROM outeredge/edge-docker-php:7.4-alpine
 
 ENV PHP_DISPLAY_ERRORS=On \
