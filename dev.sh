@@ -6,9 +6,7 @@ if [[ ! -z "${CHE_WORKSPACE_ID}" ]]; then
     export RUNTIME_URL=$(echo $CHE_INFO | jq -re '.runtime.machines[]? | select(.attributes.source == "recipe").servers | first(..|.url? | select(.!=null))')
 elif [[ ! -z "${GITPOD_WORKSPACE_ID}" ]]; then
     # We are running in Gitpod
-    export RUNTIME_URL=$(gp url $NGINX_PORT)
-    export WEB_ROOT=$GITPOD_REPO_ROOT
-    export NGINX_PORT=8080
+    source /gitpod.sh
 fi
 
 echo "$RUNTIME_URL" > /tmp/runtime.url

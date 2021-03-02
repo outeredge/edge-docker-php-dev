@@ -32,6 +32,6 @@ COPY --from=magento /templates/nginx-magento.conf.j2 /templates/
 COPY --chown=edge /.bash* /home/edge/
 COPY --chown=gitpod /.bash* /home/gitpod/
 
-COPY /dev.sh /
+COPY dev.sh gitpod.sh /
 
 CMD ["/dev.sh"]
