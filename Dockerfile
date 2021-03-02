@@ -21,7 +21,9 @@ RUN sudo apk add --no-cache \
     # Create gitpod user and group
     sudo addgroup -g 33333 -S gitpod && \
     sudo adduser -u 33333 -D -S -s /bin/bash -h /home/gitpod -G edge gitpod && \
-    sudo addgroup gitpod wheel
+    sudo addgroup gitpod wheel && \
+    sudo addgroup nginx gitpod && \
+    sudo addgroup www-data gitpod
 
 COPY --from=magento /templates/magento.conf.j2 /templates/
 COPY --from=magento /templates/nginx-vsf.conf.j2 /templates/
