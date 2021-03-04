@@ -9,8 +9,8 @@ elif [[ ! -z "${GITPOD_WORKSPACE_ID}" ]]; then
     source /gitpod.sh
 fi
 
-if [ ! -d "/home/edge/.composer/vendor" ] || [ -n "$(ls "/home/edge/.composer/vendor")" ]; then
-  cp -rT /home/edge/.composer.orig /home/edge/.composer &
+if [ ! -d "/home/$(id -u -n)/.composer/vendor" ] || [ -n "$(ls "/home/$(id -u -n)/.composer/vendor")" ]; then
+  cp -rfT /home/edge/.composer.orig $COMPOSER_HOME &
 fi
 
 echo "$RUNTIME_URL" > /tmp/runtime.url
