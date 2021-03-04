@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export COMPOSER_HOME="/home/$(id -u -n)/.composer"
+
 if [[ ! -z "${CHE_WORKSPACE_ID}" ]]; then
     # We are running in Eclipse Che
     CHE_INFO=$(curl --silent --max-time 5 $CHE_API/workspace/$CHE_WORKSPACE_ID?token=$CHE_MACHINE_TOKEN)
