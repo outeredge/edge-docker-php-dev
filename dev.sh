@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export COMPOSER_HOME="/home/$(id -u -n)/.composer"
+
 if [[ ! -z "${CHE_WORKSPACE_ID}" ]]; then
     # We are running in Eclipse Che
     CHE_INFO=$(curl --silent --max-time 5 $CHE_API/workspace/$CHE_WORKSPACE_ID?token=$CHE_MACHINE_TOKEN)
@@ -9,8 +11,8 @@ elif [[ ! -z "${GITPOD_WORKSPACE_ID}" ]]; then
     source /gitpod.sh
 fi
 
-if [ ! -d "/home/edge/.composer/vendor" ] || [ -n "$(ls "/home/edge/.composer/vendor")" ]; then
-  cp -rT /home/edge/.composer.orig /home/edge/.composer &
+if [ ! -d "/home/$(id -u -n)/.composer/vendor" ] || [ -n "$(ls "/home/$(id -u -n)/.composer/vendor")" ]; then
+  cp -rfT /home/edge/.composer.orig $COMPOSER_HOME &
 fi
 
 echo "$RUNTIME_URL" > /tmp/runtime.url
