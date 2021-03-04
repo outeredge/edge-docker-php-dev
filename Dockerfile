@@ -5,9 +5,7 @@ FROM outeredge/edge-docker-php:7.1-alpine
 ENV PHP_DISPLAY_ERRORS=On \
     APPLICATION_ENV=dev \
     MAGE_IS_DEVELOPER_MODE=true \
-    ENABLE_DEV=On \
-    ENABLE_REDIS=On \
-    XDEBUG_ENABLE=On
+    ENABLE_DEV=On
 
 RUN sudo apk add --no-cache \
         jq \
