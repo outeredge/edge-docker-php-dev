@@ -1,6 +1,3 @@
-FROM outeredge/edge-docker-magento:2.4.2 AS magento
-FROM outeredge/edge-docker-php:7.4
-
 CMD ["/dev.sh"]
 
 ARG DEBIAN_FRONTEND=noninteractive
@@ -9,10 +6,6 @@ ENV PHP_DISPLAY_ERRORS=On \
     ENABLE_DEV=On \
     ENABLE_REDIS=On \
     XDEBUG_ENABLE=On
-
-COPY --from=magento /templates/magento.conf.j2 /templates/
-COPY --from=magento /templates/nginx-vsf.conf.j2 /templates/
-COPY --from=magento /templates/nginx-magento.conf.j2 /templates/
 
 COPY --chown=edge . /
 
@@ -29,6 +22,8 @@ RUN sudo apt-get update \
     && sudo wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 \
     && sudo chmod +x /usr/local/bin/magerun2 \
     && sudo wget https://raw.githubusercontent.com/netz98/n98-magerun2/master/res/autocompletion/bash/n98-magerun2.phar.bash -P /etc/profile.d \
+    # Preserve prestissimo for composer 1
+    && if [[ "$COMPOSER_VERSION" = "1" ]]; then mv /home/edge/.composer /home/edge/.composer.orig; fi \
     # Create gitpod user and group
     && sudo addgroup --gid 33333 --system gitpod \
     && sudo adduser --uid 33333 --system --shell /bin/bash --ingroup gitpod gitpod \
