@@ -2,6 +2,7 @@
 [ ! -z "$GITPOD_WORKSPACE_ID" ] && source /gitpod.sh
 source /etc/profile.d/bash_completion.sh
 source /etc/profile.d/n98-magerun2.phar.bash
+source /usr/share/bash-completion/completions/git
 
 # Set aliases
 alias magento="$WEB_ROOT/bin/magento"
