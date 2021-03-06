@@ -17,11 +17,16 @@ export CHROME_HOST=http://chrome.default:9222
 export COMPOSER_MEMORY_LIMIT=-1
 export PATH="$PATH:./node_modules/.bin:./vendor/bin"
 
+[ -f "/tmp/runtime.url" ] && export RUNTIME_URL=$(cat /tmp/runtime.url)
+
+# Load custom environment variables from .env
+if [[ -f "$WEB_ROOT/.env" ]]; then
+    export $(grep -v '^#' $WEB_ROOT/.env | xargs -d '\n')
+fi
+
 [ -z "$EDITOR" ] && export EDITOR="nano"
 [ -z "$VISUAL" ] && export VISUAL="$EDITOR"
 [ -z "$GIT_EDITOR" ] && export GIT_EDITOR="$EDITOR"
-
-[ -f "/tmp/runtime.url" ] && export RUNTIME_URL=$(cat /tmp/runtime.url)
 
 # Switch pwd to web root
 [ ! -z "$WEB_ROOT" ] && cd $WEB_ROOT
