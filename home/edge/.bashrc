@@ -16,11 +16,16 @@ export PS1='\[\033[01;32m\]\[\033[0m\033[0;32m\]\[\033[01;32m\]outer/edge\[\033[
 export COMPOSER_MEMORY_LIMIT=-1
 export PATH="$PATH:./node_modules/.bin:./vendor/bin"
 
+[ -f "/tmp/runtime.url" ] && export RUNTIME_URL=$(cat /tmp/runtime.url)
+
+# Load custom environment variables from .env
+if [[ -f "$WEB_ROOT/.env" ]]; then
+    set -a; . $WEB_ROOT/.env; set +a
+fi
+
 [ -z "$EDITOR" ] && export EDITOR="nano"
 [ -z "$VISUAL" ] && export VISUAL="$EDITOR"
 [ -z "$GIT_EDITOR" ] && export GIT_EDITOR="$EDITOR"
-
-[ -f "/tmp/runtime.url" ] && export RUNTIME_URL=$(cat /tmp/runtime.url)
 
 # Switch pwd to web root
 [ ! -z "$WEB_ROOT" ] && cd $WEB_ROOT
