@@ -29,6 +29,7 @@ RUN sudo apt-get update \
     && sudo adduser --uid 33333 --system --shell /bin/bash --ingroup gitpod gitpod \
     && sudo addgroup gitpod edge \
     && sudo addgroup gitpod sudo \
+    && sudo addgroup gitpod tty \
     && sudo addgroup nginx gitpod \
     && sudo addgroup www-data gitpod \
     && sudo cp -rf /home/edge/. /home/gitpod/ \

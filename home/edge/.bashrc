@@ -13,7 +13,6 @@ alias magerun="magerun2"
 export PS1='\[\033[01;32m\]\[\033[0m\033[0;32m\]\[\033[01;32m\]outer/edge\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ '
 
 # Set environment variables
-export CHROME_HOST=http://chrome.default:9222
 export COMPOSER_MEMORY_LIMIT=-1
 export PATH="$PATH:./node_modules/.bin:./vendor/bin"
 

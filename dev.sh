@@ -9,6 +9,9 @@ if [[ ! -z "${CHE_WORKSPACE_ID}" ]]; then
 elif [[ ! -z "${GITPOD_WORKSPACE_ID}" ]]; then
     # We are running in Gitpod
     source /gitpod.sh
+    if [[ $ENABLE_SSH = "On" ]]; then
+        echo "gitpod:$SSH_PASSWORD" | sudo chpasswd
+    fi
 fi
 
 if [[ "${COMPOSER_VERSION}" = "1" ]]; then
