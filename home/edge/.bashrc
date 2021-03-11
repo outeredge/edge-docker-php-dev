@@ -21,7 +21,7 @@ export PATH="$PATH:./node_modules/.bin:./vendor/bin"
 
 # Load custom environment variables from .env
 if [[ -f "$WEB_ROOT/.env" ]]; then
-    export $(grep -v '^#' $WEB_ROOT/.env | xargs -d '\n')
+    set -a; . $WEB_ROOT/.env; set +a
 fi
 
 [ -z "$EDITOR" ] && export EDITOR="nano"
