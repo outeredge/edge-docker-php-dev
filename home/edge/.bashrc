@@ -19,7 +19,7 @@ export PATH="$PATH:./node_modules/.bin:./vendor/bin"
 [ -f "/tmp/runtime.url" ] && export RUNTIME_URL=$(cat /tmp/runtime.url)
 
 # Load custom environment variables from .env
-if [[ -f "$WEB_ROOT/.env" ]]; then
+if [ -f "$WEB_ROOT/.env" ]; then
     set -a; . $WEB_ROOT/.env; set +a
 fi
 
