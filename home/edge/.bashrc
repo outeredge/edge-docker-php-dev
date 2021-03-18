@@ -18,9 +18,9 @@ export PATH="$PATH:./node_modules/.bin:./vendor/bin"
 
 [ -f "/tmp/runtime.url" ] && export RUNTIME_URL=$(cat /tmp/runtime.url)
 
-# Load custom environment variables from .env
-if [ -f "$WEB_ROOT/.env" ]; then
-    set -a; . $WEB_ROOT/.env; set +a
+# Load custom environment variables from .env when CUSTOM_VARS_SET is empty
+if [ -z "$CUSTOM_VARS_SET" -a -f "$WEB_ROOT/.env" ]; then
+    set -a; . $WEB_ROOT/.env; export CUSTOM_VARS_SET=1; set +a
 fi
 
 [ -z "$EDITOR" ] && export EDITOR="nano"
