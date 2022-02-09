@@ -10,6 +10,7 @@ ENV PHP_DISPLAY_ERRORS=On \
 COPY --chown=edge . /
 
 RUN sudo apt-get update \
+    && sudo rm -Rf /etc/php/$PHP_VERSION/cli \
     && sudo apt-get install --no-install-recommends --yes \
         imagemagick \
         jq \
@@ -18,6 +19,8 @@ RUN sudo apt-get update \
         php${PHP_VERSION}-gd \
         php${PHP_VERSION}-imagick \
         vim \
+    && sudo rm -Rf /etc/php/$PHP_VERSION/cli \
+    && sudo ln -s /etc/php/$PHP_VERSION/fpm /etc/php/$PHP_VERSION/cli \
     # Install Magerun
     && sudo wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 \
     && sudo chmod +x /usr/local/bin/magerun2 \
