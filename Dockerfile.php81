@@ -1,0 +1,12 @@
+# syntax=edrevo/dockerfile-plus
+
+FROM outeredge/edge-docker-magento:2.4.3-p1 AS magento
+FROM outeredge/edge-docker-php:8.1
+
+INCLUDE+ Dockerfile.common
+
+COPY --from=magento \
+        /templates/magento.conf.j2 \
+        /templates/nginx-magento.conf.j2 \
+        /templates/nginx-vsf.conf.j2 \
+    /templates/
