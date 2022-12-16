@@ -5,6 +5,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV PHP_DISPLAY_ERRORS=On \
     ENABLE_DEV=On \
     ENABLE_REDIS=On \
+    NODE_START=Off \
     XDEBUG_ENABLE=On
 
 COPY --chown=edge . /
