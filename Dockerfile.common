@@ -2,7 +2,8 @@ CMD ["/dev.sh"]
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-ENV PHP_DISPLAY_ERRORS=On \
+ENV APPLICATION_ENV=dev \
+    PHP_DISPLAY_ERRORS=On \
     ENABLE_DEV=On \
     ENABLE_REDIS=On \
     NODE_START=Off \

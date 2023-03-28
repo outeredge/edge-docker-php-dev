@@ -3,8 +3,7 @@
 FROM outeredge/edge-docker-magento:1.9.4.5 AS magento1
 FROM outeredge/edge-docker-php:5.6
 
-ENV APPLICATION_ENV=dev \
-    MAGE_IS_DEVELOPER_MODE=true
+ENV MAGE_IS_DEVELOPER_MODE=true
 
 INCLUDE+ Dockerfile.common
 

@@ -4,8 +4,7 @@ FROM outeredge/edge-docker-magento:2.3.5 AS magento
 FROM outeredge/edge-docker-magento:1.9.4.5-php72 AS magento1
 FROM outeredge/edge-docker-php:7.2
 
-ENV APPLICATION_ENV=dev \
-    MAGE_IS_DEVELOPER_MODE=true
+ENV MAGE_IS_DEVELOPER_MODE=true
 
 INCLUDE+ Dockerfile.common
 
