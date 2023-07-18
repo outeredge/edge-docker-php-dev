@@ -30,8 +30,9 @@ RUN sudo apt-get update \
     # Install masquerade
     && sudo wget https://github.com/elgentos/masquerade/releases/download/1.2.0/masquerade.phar -O /usr/local/bin/masquerade \
     && sudo chmod +x /usr/local/bin/masquerade \
-    # Preserve prestissimo for composer 1
+    # Preserve prestissimo for Composer 1 & install cache clean tool
     && if [ "$COMPOSER_VERSION" = "1" ]; then mv /home/edge/.composer /home/edge/.composer.orig; fi \
+    && sudo -H -u edge composer global require mage2tv/magento-cache-clean \
     # Create gitpod user and group
     && sudo addgroup --gid 33333 --system gitpod \
     && sudo adduser --uid 33333 --system --home /home/gitpod --shell /bin/bash --ingroup gitpod gitpod \
