@@ -27,9 +27,7 @@ RUN sudo apt-get update \
     # Install Magerun
     && sudo wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 \
     && sudo chmod +x /usr/local/bin/magerun2 \
-    && sudo wget https://raw.githubusercontent.com/netz98/n98-magerun2/master/res/autocompletion/bash/n98-magerun2.phar.bash -P /etc/profile.d \
-    # Install masquerade
-    && sudo wget https://github.com/elgentos/masquerade/releases/download/1.2.0/masquerade.phar -O /usr/local/bin/masquerade \
+    && sudo wget https://raw.githubusercontent.com/netz98/n98-magerun2/master/res/autocompletion/bash/n98-magerun2.phar.bash -P /etc/profile.d \    
     && sudo chmod +x /usr/local/bin/masquerade \
     # Preserve prestissimo for Composer 1 & install cache clean tool
     && if [ "$COMPOSER_VERSION" = "1" ]; then mv /home/edge/.composer /home/edge/.composer.orig; fi \
