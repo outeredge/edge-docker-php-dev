@@ -24,6 +24,8 @@ RUN sudo apt-get update \
         vim \
     && sudo rm -Rf /etc/php/$PHP_VERSION/cli \
     && sudo ln -s /etc/php/$PHP_VERSION/fpm /etc/php/$PHP_VERSION/cli \
+    # Install Grunt
+    && sudo npm install -g grunt-cli
     # Install Magerun
     && sudo wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 \
     && sudo chmod +x /usr/local/bin/magerun2 \
