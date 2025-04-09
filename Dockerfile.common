@@ -36,10 +36,9 @@ RUN sudo apt-get update \
     # Create gitpod user and group
     && sudo addgroup --gid 33333 --system gitpod \
     && sudo adduser --uid 33333 --system --home /home/gitpod --shell /bin/bash --ingroup gitpod gitpod \
-    && sudo addgroup gitpod edge \
-    && sudo addgroup gitpod sudo \
-    && sudo addgroup nginx gitpod \
-    && sudo addgroup www-data gitpod \
+    && sudo usermod -a -G edge,sudo gitpod \
+    && sudo usermod -a -G gitpod nginx \
+    && sudo usermod -a -G gitpod www-data \
     && sudo cp -rf /home/edge/. /home/gitpod/ \
     && sudo chown -R gitpod:gitpod /home/gitpod/ \
     # Cleanup
