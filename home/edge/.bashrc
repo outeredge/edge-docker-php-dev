@@ -1,4 +1,5 @@
 # Source other scripts
+[ ! -z "$GITPOD_ENVIRONMENT_ID" ] && source /ona.sh
 [ ! -z "$GITPOD_WORKSPACE_ID" ] && source /gitpod.sh
 source /etc/profile.d/bash_completion.sh
 source /usr/share/bash-completion/completions/git
@@ -28,5 +29,5 @@ fi
 [ -z "$VISUAL" ] && export VISUAL="$EDITOR"
 [ -z "$GIT_EDITOR" ] && export GIT_EDITOR="$EDITOR"
 
-# Switch pwd to web root
-[ ! -z "$WEB_ROOT" ] && cd $WEB_ROOT
+# Switch pwd to web root (on Gitpod Classic only)
+[ ! -z "$GITPOD_WORKSPACE_ID" ] && cd $WEB_ROOT

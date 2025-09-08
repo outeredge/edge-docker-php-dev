@@ -33,7 +33,7 @@ RUN sudo apt-get update \
     # Preserve prestissimo for Composer 1 & install cache clean tool
     && if [ "$COMPOSER_VERSION" = "1" ]; then mv /home/edge/.composer /home/edge/.composer.orig; fi \
     && sudo -H -u edge composer global require mage2tv/magento-cache-clean \
-    # Create gitpod user and group
+    # Create gitpod user and group (no longer needed for Ona)
     && sudo addgroup --gid 33333 --system gitpod \
     && sudo adduser --uid 33333 --system --home /home/gitpod --shell /bin/bash --ingroup gitpod gitpod \
     && sudo usermod -a -G edge,sudo gitpod \

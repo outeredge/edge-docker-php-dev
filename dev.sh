@@ -2,7 +2,10 @@
 
 export COMPOSER_HOME="/home/$(whoami)/.composer"
 
-if [ ! -z "${GITPOD_WORKSPACE_ID}" ]; then
+if [ ! -z "${GITPOD_ENVIRONMENT_ID}" ]; then
+    # We are running in Ona
+    source /ona.sh
+elif [ ! -z "${GITPOD_WORKSPACE_ID}" ]; then
     # We are running in Gitpod
     source /gitpod.sh
     if [ "$ENABLE_SSH" = "On" ]; then
