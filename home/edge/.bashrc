@@ -26,8 +26,6 @@ if [ -z "$CUSTOM_VARS_SET" -a -f "$WEB_ROOT/.env" ]; then
 fi
 
 [ -z "$EDITOR" ] && export EDITOR="nano"
-[ -z "$VISUAL" ] && export VISUAL="$EDITOR"
-[ -z "$GIT_EDITOR" ] && export GIT_EDITOR="$EDITOR"
 
 # Switch pwd to web root (on Gitpod Classic only)
 [ ! -z "$GITPOD_WORKSPACE_ID" ] && cd $WEB_ROOT
