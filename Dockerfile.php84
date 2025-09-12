@@ -1,7 +1,7 @@
 # syntax=edrevo/dockerfile-plus
 
 FROM outeredge/edge-docker-magento:2.4.8 AS magento
-FROM outeredge/edge-docker-php:8.4
+FROM outeredge/edge-docker-php:8.4-node
 
 INCLUDE+ Dockerfile.common
 

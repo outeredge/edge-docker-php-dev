@@ -4,42 +4,42 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 ENV APPLICATION_ENV=dev \
     PHP_DISPLAY_ERRORS=On \
+    PHP_OPCACHE_VALIDATE=On \
     ENABLE_DEV=On \
-    ENABLE_REDIS=On \
     NODE_START=Off \
-    XDEBUG_ENABLE=On
+    NEWRELIC_LICENSE= \
+    XDEBUG_ENABLE=On \
+    XDEBUG_HOST=
 
 COPY --chown=edge . /
 
-RUN sudo apt-get update \
-    && sudo rm -Rf /etc/php/$PHP_VERSION/cli \
-    && sudo apt-get install --no-install-recommends --yes \
+USER root
+
+RUN echo "deb http://apt.newrelic.com/debian/ newrelic non-free" >> /etc/apt/sources.list \
+    && apt-config dump | grep -we 'APT::Key::Assert-Pubkey-Algo "' | sed 's/";/,dsa1024";/' | tee /etc/apt/apt.conf.d/99PubKeyAlgoWorkaround \
+    && wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add - \
+    && apt-get update \
+    && rm -Rf /etc/php/$PHP_VERSION/cli \
+    && apt-get install --no-install-recommends --yes \
         imagemagick \
         jq \
         rsync \
         sassc \
         mysql-client \
-        php${PHP_VERSION}-gd \
+        newrelic-php5 \
         php${PHP_VERSION}-imagick \
+        php${PHP_VERSION}-xdebug \
         vim \
-    && sudo rm -Rf /etc/php/$PHP_VERSION/cli \
-    && sudo ln -s /etc/php/$PHP_VERSION/fpm /etc/php/$PHP_VERSION/cli \
-    # Install Grunt
-    && sudo npm install -g grunt-cli \
+        zsh \
+    && rm -Rf /etc/php/$PHP_VERSION/cli \
+    && ln -s /etc/php/$PHP_VERSION/fpm /etc/php/$PHP_VERSION/cli \
+    # Install Grunt and Gulp CLI's
+    && npm install --global grunt-cli gulp-cli \
     # Install Magerun
-    && sudo wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 \
-    && sudo chmod +x /usr/local/bin/magerun2 \
-    && sudo wget https://raw.githubusercontent.com/netz98/n98-magerun2/master/res/autocompletion/bash/n98-magerun2.phar.bash -P /etc/profile.d \
-    # Preserve prestissimo for Composer 1 & install cache clean tool
-    && if [ "$COMPOSER_VERSION" = "1" ]; then mv /home/edge/.composer /home/edge/.composer.orig; fi \
-    && sudo -H -u edge composer global require mage2tv/magento-cache-clean \
-    # Create gitpod user and group (no longer needed for Ona)
-    && sudo addgroup --gid 33333 --system gitpod \
-    && sudo adduser --uid 33333 --system --home /home/gitpod --shell /bin/bash --ingroup gitpod gitpod \
-    && sudo usermod -a -G edge,sudo gitpod \
-    && sudo usermod -a -G gitpod nginx \
-    && sudo usermod -a -G gitpod www-data \
-    && sudo cp -rf /home/edge/. /home/gitpod/ \
-    && sudo chown -R gitpod:gitpod /home/gitpod/ \
+    && wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 \
+    && chmod +x /usr/local/bin/magerun2 \
+    && wget https://raw.githubusercontent.com/netz98/n98-magerun2/master/res/autocompletion/bash/n98-magerun2.phar.bash -P /etc/profile.d \
     # Cleanup
-    && sudo rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
+
+USER edge
