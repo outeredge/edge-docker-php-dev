@@ -11,8 +11,6 @@ ENV APPLICATION_ENV=dev \
     XDEBUG_ENABLE=On \
     XDEBUG_HOST=
 
-COPY --chown=edge . /
-
 USER root
 
 RUN echo "deb http://apt.newrelic.com/debian/ newrelic non-free" >> /etc/apt/sources.list \
@@ -39,7 +37,11 @@ RUN echo "deb http://apt.newrelic.com/debian/ newrelic non-free" >> /etc/apt/sou
     && wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 \
     && chmod +x /usr/local/bin/magerun2 \
     && wget https://raw.githubusercontent.com/netz98/n98-magerun2/master/res/autocompletion/bash/n98-magerun2.phar.bash -P /etc/profile.d \
+    # Install Oh My Zsh for the edge user
+    && sudo -u edge sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended \
     # Cleanup
     && rm -rf /var/lib/apt/lists/*
 
 USER edge
+
+COPY --chown=edge . /

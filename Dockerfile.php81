@@ -1,15 +1,5 @@
 # syntax=edrevo/dockerfile-plus
 
-FROM outeredge/edge-docker-magento:2.4.6 AS magento
-FROM outeredge/edge-docker-php:8.1
+FROM outeredge/edge-docker-php:8.1-node
 
 INCLUDE+ Dockerfile.common
-
-# Install masquerade
-RUN sudo wget https://github.com/elgentos/masquerade/releases/download/1.2.2/masquerade.phar -O /usr/local/bin/masquerade \
-    && sudo chmod +x /usr/local/bin/masquerade
-
-COPY --from=magento \
-        /templates/magento.conf.j2 \
-        /templates/nginx-magento.conf.j2 \
-    /templates/
