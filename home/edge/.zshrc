@@ -6,7 +6,8 @@ HIST_STAMPS="dd/mm/yyyy"
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
-export PROMPT=${PROMPT/➜/}
+PROMPT="  %{$fg[cyan]%}%c%{$reset_color%}"
+PROMPT+=' $(git_prompt_info)'
 
 [ -n "$GITPOD_ENVIRONMENT_ID" ] && source /ona.sh
 
