@@ -1,8 +1,9 @@
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 zstyle ':omz:update' mode disabled
+zstyle ':omz:*' aliases no
 HIST_STAMPS="dd/mm/yyyy"
-plugins=(git dotenv)
+plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 export PROMPT=${PROMPT/➜/}
