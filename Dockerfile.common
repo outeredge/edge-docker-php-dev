@@ -27,7 +27,7 @@ RUN echo "deb http://apt.newrelic.com/debian/ newrelic non-free" >> /etc/apt/sou
         newrelic-php5 \
         php${PHP_VERSION}-imagick \
         php${PHP_VERSION}-xdebug \
-        vim
+        vim \
     && rm -Rf /etc/php/$PHP_VERSION/cli \
     && ln -s /etc/php/$PHP_VERSION/fpm /etc/php/$PHP_VERSION/cli \
     # Install Grunt and Gulp CLI's
