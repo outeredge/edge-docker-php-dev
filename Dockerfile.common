@@ -27,8 +27,7 @@ RUN echo "deb http://apt.newrelic.com/debian/ newrelic non-free" >> /etc/apt/sou
         newrelic-php5 \
         php${PHP_VERSION}-imagick \
         php${PHP_VERSION}-xdebug \
-        vim \
-        zsh \
+        vim
     && rm -Rf /etc/php/$PHP_VERSION/cli \
     && ln -s /etc/php/$PHP_VERSION/fpm /etc/php/$PHP_VERSION/cli \
     # Install Grunt and Gulp CLI's
@@ -37,8 +36,6 @@ RUN echo "deb http://apt.newrelic.com/debian/ newrelic non-free" >> /etc/apt/sou
     && wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 \
     && chmod +x /usr/local/bin/magerun2 \
     && wget https://raw.githubusercontent.com/netz98/n98-magerun2/master/res/autocompletion/bash/n98-magerun2.phar.bash -P /etc/profile.d \
-    # Install Oh My Zsh for the edge user
-    && sudo -u edge sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended \
     # Cleanup
     && rm -rf /var/lib/apt/lists/*
 
