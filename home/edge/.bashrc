@@ -34,13 +34,13 @@ __bash_prompt() {
             && if git --no-optional-locks ls-files --error-unmatch -m --directory --no-empty-directory -o --exclude-standard ":/*" > /dev/null 2>&1; then \
                 echo -n " \[\033[1;33m\]✗"; \
             fi \
-            && echo -n "\[\033[0;36m\]) "; \
+            && echo -n "\[\033[0;36m\])"; \
         fi`'
     local lightblue='\[\033[1;34m\]'
     local removecolor='\[\033[0m\]'
     local cleandir='`echo -n "${PWD/\/workspaces\//}"`'
 
-    PS1="${lastcmdstatus}${lightblue}${cleandir} ${gitbranch}${removecolor}\$ "
+    PS1="${lastcmdstatus}${lightblue}${cleandir}${gitbranch}${removecolor}\$ "
     unset -f __bash_prompt
 }
 __bash_prompt
