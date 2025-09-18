@@ -51,6 +51,7 @@ __bash_prompt
 # Enable bash completions for Git and Magerun
 source /usr/share/bash-completion/completions/git
 source /etc/profile.d/n98-magerun2.phar.bash
+source /home/edge/nuke.sh
 
 # Set PATH to include node and composer
 export PATH="$PATH:./node_modules/.bin:./vendor/bin"
