@@ -9,4 +9,4 @@ export EDITOR='code --wait'
 alias magento="$WEB_ROOT/bin/magento"
 alias magerun2="magerun2 --root-dir=$WEB_ROOT"
 alias magerun="magerun2"
-#alias nuke="$WEB_ROOT/bin/magento outeredge:nuke"
+alias nuke="$WEB_ROOT/bin/magento outeredge:nuke"
