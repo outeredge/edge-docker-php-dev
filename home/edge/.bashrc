@@ -46,7 +46,9 @@ __bash_prompt() {
 __bash_prompt
 
 # Ona environment setup
-[ -n "$GITPOD_ENVIRONMENT_ID" ] && source /ona.sh
+if command -v gitpod > /dev/null 2>&1; then
+    source /ona.sh
+fi
 
 # Enable bash completions for Git and Magerun
 source /usr/share/bash-completion/completions/git
