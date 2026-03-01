@@ -1,6 +1,8 @@
 [xdebug]
 {% if XDEBUG_ENABLE == 'On' %}
 zend_extension = xdebug.so
+{% else %}
+;zend_extension = xdebug.so
 {% endif %}
 
 {% if PHP_VERSION > '7.1' %}

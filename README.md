@@ -6,9 +6,14 @@ See the base image [edge-docker-php](https://github.com/outeredge/edge-docker-ph
 
 | Environment       | Default | Description |
 | -------------     | ------- | --- |
-| NEWRELIC_LICENSE  | -       | New Relic license key to enable New Relic PHP agent |
-| XDEBUG_ENABLE     | On      | Enables the Xdebug PHP extension |
+| XDEBUG_ENABLE     | Off     | Enables the Xdebug PHP extension |
 | XDEBUG_HOST       | -       | Specify the remote host Xdebug should connect to |
+
+You can also quickly enable or disable Xdebug on demand using the CLI:
+```bash
+xdebug on
+xdebug off
+```
 
 When running in Ona, add the following to your `automations.yaml`:
 

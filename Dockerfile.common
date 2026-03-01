@@ -6,31 +6,26 @@ ENV APPLICATION_ENV=dev \
     PHP_DISPLAY_ERRORS=On \
     PHP_OPCACHE_VALIDATE=On \
     ENABLE_DEV=On \
-    NEWRELIC_LICENSE= \
-    XDEBUG_ENABLE=On \
+    XDEBUG_ENABLE=Off \
     XDEBUG_HOST=
 
 USER root
 
-RUN echo "deb http://apt.newrelic.com/debian/ newrelic non-free" >> /etc/apt/sources.list \
-    && apt-config dump | grep -we 'APT::Key::Assert-Pubkey-Algo "' | sed 's/";/,dsa1024";/' | tee /etc/apt/apt.conf.d/99PubKeyAlgoWorkaround \
-    && wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add - \
+RUN rm -Rf /etc/php/$PHP_VERSION/cli \
     && apt-get update \
-    && rm -Rf /etc/php/$PHP_VERSION/cli \
     && apt-get install --no-install-recommends --yes \
         imagemagick \
         jq \
         rsync \
         sassc \
         mysql-client \
-        newrelic-php5 \
         php${PHP_VERSION}-imagick \
         php${PHP_VERSION}-xdebug \
         vim \
     && rm -Rf /etc/php/$PHP_VERSION/cli \
     && ln -s /etc/php/$PHP_VERSION/fpm /etc/php/$PHP_VERSION/cli \
     # Install Grunt and Gulp CLI's
-    && npm install --global grunt-cli gulp-cli \
+    && npm install --global grunt-cli gulp-cli @kilocode/cli \
     # Install Magerun
     && wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 \
     && chmod +x /usr/local/bin/magerun2 \

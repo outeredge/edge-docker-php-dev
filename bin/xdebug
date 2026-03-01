@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ "$1" = "on" ]; then
+    sudo sed -i 's/^;zend_extension = xdebug.so/zend_extension = xdebug.so/' /etc/php/*/fpm/conf.d/20-xdebug.ini
+    sudo supervisorctl restart php-fpm
+    echo "Xdebug enabled"
+elif [ "$1" = "off" ]; then
+    sudo sed -i 's/^zend_extension = xdebug.so/;zend_extension = xdebug.so/' /etc/php/*/fpm/conf.d/20-xdebug.ini
+    sudo supervisorctl restart php-fpm
+    echo "Xdebug disabled"
+else
+    echo "Usage: xdebug [on|off]"
+fi
