@@ -41,6 +41,6 @@ RUN rm -Rf /etc/php/$PHP_VERSION/cli \
 USER edge
 
 # Install Agent Skills for edge user
-RUN npx skills add https://github.com/vercel-labs/agent-browser --skill agent-browser --global --agent universal --yes
+RUN npx skills add https://github.com/vercel-labs/agent-browser --skill agent-browser --global --agent kilo --yes
 
 COPY --chown=edge . /
