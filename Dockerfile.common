@@ -25,7 +25,7 @@ RUN rm -Rf /etc/php/$PHP_VERSION/cli \
     && rm -Rf /etc/php/$PHP_VERSION/cli \
     && ln -s /etc/php/$PHP_VERSION/fpm /etc/php/$PHP_VERSION/cli \
     # Install Grunt and Gulp CLI's
-    && npm install --global grunt-cli gulp-cli @kilocode/cli agent-browser \    
+    && npm install --global grunt-cli gulp-cli agent-browser --ignore-scripts \
     # Install Magerun
     && wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 \
     && chmod +x /usr/local/bin/magerun2 \
