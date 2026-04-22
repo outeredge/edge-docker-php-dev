@@ -36,6 +36,7 @@ RUN rm -Rf /etc/php/$PHP_VERSION/cli \
     && apt-get install -y /tmp/glab.deb \
     && rm /tmp/glab.deb \
     # Cleanup
+    && find /usr/lib/node_modules/agent-browser/bin -type f -name "agent-browser-*" ! -name "agent-browser-linux-x64" -exec rm -f {} + \
     && rm -rf /var/lib/apt/lists/*
 
 USER edge
