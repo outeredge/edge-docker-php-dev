@@ -6,6 +6,8 @@ ENV APPLICATION_ENV=dev \
     PHP_DISPLAY_ERRORS=On \
     PHP_OPCACHE_VALIDATE=On \
     ENABLE_DEV=On \
+    GLAB_CHECK_UPDATE=false \
+    GLAB_SEND_TELEMETRY=false \
     XDEBUG_ENABLE=Off \
     XDEBUG_HOST=
 
@@ -24,7 +26,7 @@ RUN rm -Rf /etc/php/$PHP_VERSION/cli \
         vim \
     && rm -Rf /etc/php/$PHP_VERSION/cli \
     && ln -s /etc/php/$PHP_VERSION/fpm /etc/php/$PHP_VERSION/cli \
-    # Install Grunt and Gulp CLI's
+    # Install Grunt, Gulp and Kilo CLI's
     && npm install --global grunt-cli gulp-cli agent-browser @kilocode/cli @kilocode/cli-linux-x64 --omit=optional --ignore-scripts \
     # Install Magerun
     && wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 \
