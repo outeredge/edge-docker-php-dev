@@ -25,7 +25,7 @@ RUN rm -Rf /etc/php/$PHP_VERSION/cli \
     && rm -Rf /etc/php/$PHP_VERSION/cli \
     && ln -s /etc/php/$PHP_VERSION/fpm /etc/php/$PHP_VERSION/cli \
     # Install Grunt and Gulp CLI's
-    && npm install --global grunt-cli gulp-cli agent-browser --ignore-scripts \
+    && npm install --global grunt-cli gulp-cli agent-browser @kilocode/cli @kilocode/cli-linux-x64 --omit=optional --ignore-scripts \
     # Install Magerun
     && wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 \
     && chmod +x /usr/local/bin/magerun2 \
@@ -42,7 +42,6 @@ RUN rm -Rf /etc/php/$PHP_VERSION/cli \
 USER edge
 
 # Install Agent Skills for edge user
-RUN npx skills add https://github.com/vercel-labs/agent-browser --skill agent-browser --global --agent universal --yes \
-    && npx skills add https://github.com/anthropics/skills --skill skill-creator --global --agent universal --yes
+RUN npx skills add https://github.com/vercel-labs/agent-browser --skill agent-browser --global --agent universal --yes
 
 COPY --chown=edge . /
