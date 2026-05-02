@@ -55,7 +55,7 @@ source /usr/share/bash-completion/completions/git
 source /etc/profile.d/n98-magerun2.phar.bash
 
 # Set PATH to include node and composer
-export PATH="$PATH:./node_modules/.bin:./vendor/bin"
+export PATH="$PATH:./node_modules/.bin:./vendor/bin:./bin"
 
 # Set RUNTIME_URL for remote sessions
 [ -z "$RUNTIME_URL" -a -f "/tmp/runtime.url" ] && export RUNTIME_URL=$(cat /tmp/runtime.url)
