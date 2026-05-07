@@ -1,13 +1,45 @@
 #!/bin/bash
 
-if [ "$1" = "on" ]; then
-    sudo sed -i 's/^;zend_extension = xdebug.so/zend_extension = xdebug.so/' /etc/php/*/fpm/conf.d/20-xdebug.ini
-    sudo supervisorctl restart php-fpm
-    echo "Xdebug enabled"
-elif [ "$1" = "off" ]; then
-    sudo sed -i 's/^zend_extension = xdebug.so/;zend_extension = xdebug.so/' /etc/php/*/fpm/conf.d/20-xdebug.ini
-    sudo supervisorctl restart php-fpm
-    echo "Xdebug disabled"
+# Dual-track xdebug toggle.
+#   - FrankenPHP track: rename PHP's xdebug ini and hot-reload via
+#     `frankenphp reload --force`. No sudo, no PID 1 restart.
+#   - Legacy nginx + supervisord track: keep the original `sudo sed` +
+#     `sudo supervisorctl restart php-fpm` flow, byte-for-byte.
+
+if command -v frankenphp >/dev/null 2>&1; then
+    set -eu
+    INI_DIR="$(php -r 'echo PHP_INI_DIR;')/conf.d"
+    OFF="$INI_DIR/docker-php-ext-xdebug.ini.disabled"
+    ON="$INI_DIR/docker-php-ext-xdebug.ini"
+    case "${1:-}" in
+        on)
+            [ -f "$OFF" ] && mv "$OFF" "$ON"
+            frankenphp reload --force --config /etc/caddy/Caddyfile
+            echo "Xdebug enabled"
+            ;;
+        off)
+            [ -f "$ON" ] && mv "$ON" "$OFF"
+            frankenphp reload --force --config /etc/caddy/Caddyfile
+            echo "Xdebug disabled"
+            ;;
+        *) echo "Usage: xdebug [on|off]"; exit 1 ;;
+    esac
 else
-    echo "Usage: xdebug [on|off]"
+    if [ "$1" = "on" ]; then
+        # Use wildcard expansion to find the disabled file
+        for f in /etc/php/*/fpm/conf.d/20-xdebug.ini.disabled; do
+            [ -f "$f" ] && sudo mv "$f" "${f%.disabled}"
+        done
+        sudo supervisorctl restart php-fpm
+        echo "Xdebug enabled"
+    elif [ "$1" = "off" ]; then
+        # Use wildcard expansion to find the enabled file
+        for f in /etc/php/*/fpm/conf.d/20-xdebug.ini; do
+            [ -f "$f" ] && sudo mv "$f" "${f}.disabled"
+        done
+        sudo supervisorctl restart php-fpm
+        echo "Xdebug disabled"
+    else
+        echo "Usage: xdebug [on|off]"
+    fi
 fi

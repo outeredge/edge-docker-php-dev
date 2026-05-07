@@ -5,7 +5,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV APPLICATION_ENV=dev \
     PHP_DISPLAY_ERRORS=On \
     PHP_OPCACHE_VALIDATE=On \
-    ENABLE_DEV=On \
     GLAB_CHECK_UPDATE=false \
     GLAB_SEND_TELEMETRY=false \
     XDEBUG_ENABLE=Off
@@ -14,21 +13,30 @@ USER root
 
 COPY templates/20-xdebug.ini /tmp/20-xdebug.ini
 
-RUN rm -Rf /etc/php/$PHP_VERSION/cli \
-    && apt-get update \
+RUN apt-get update \
     && apt-get install --no-install-recommends --yes \
         imagemagick \
         jq \
         rsync \
         sassc \
         default-mysql-client \
-        php${PHP_VERSION}-imagick \
-        php${PHP_VERSION}-xdebug \
         vim \
-    && rm -Rf /etc/php/$PHP_VERSION/cli \
-    && ln -s /etc/php/$PHP_VERSION/fpm /etc/php/$PHP_VERSION/cli \
-    && rm -f /etc/php/$PHP_VERSION/fpm/conf.d/20-xdebug.ini \
-    && cp /tmp/20-xdebug.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-xdebug.ini.disabled \
+    && install-php-extensions imagick xdebug \
+    # `install-php-extensions xdebug` writes an auto-generated ini into
+    # $PHP_INI_DIR/conf.d/. Defensively glob-match it: must be exactly one file.
+    && XDEBUG_INI_COUNT=$(ls "$PHP_INI_DIR"/conf.d/*xdebug*.ini 2>/dev/null | wc -l) \
+    && if [ "$XDEBUG_INI_COUNT" != "1" ]; then \
+           echo "ERROR: expected exactly 1 xdebug ini in $PHP_INI_DIR/conf.d/, found $XDEBUG_INI_COUNT" >&2; \
+           ls -la "$PHP_INI_DIR"/conf.d/ >&2; \
+           exit 1; \
+       fi \
+    && rm -f "$PHP_INI_DIR"/conf.d/*xdebug*.ini \
+    && mv /tmp/20-xdebug.ini "$PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini.disabled" \
+    && chown edge:edge "$PHP_INI_DIR/conf.d" "$PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini.disabled" \
+    && curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
+    && apt-get install --no-install-recommends --yes nodejs \
+    && npm install --global bun \
+    && npm cache clean --force \
     # Install Grunt, Gulp and Kilo CLI's
     && npm install --global grunt-cli gulp-cli agent-browser @kilocode/cli @kilocode/cli-linux-x64 --omit=optional --ignore-scripts \
     # Install Magerun

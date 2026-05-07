@@ -23,5 +23,9 @@ fi;
 
 echo "Building image outeredge/edge-docker-php-dev:$1 with Dockerfile.php${1//./}"
 DOCKER_BUILDKIT=1 docker build --pull . -t outeredge/edge-docker-php-dev:$1 -f Dockerfile.php${1//./} && \
-docker push outeredge/edge-docker-php-dev:$1 && \
+docker push outeredge/edge-docker-php-dev:$1
+
+echo "Building image outeredge/edge-docker-php-dev:$1-frankenphp with Dockerfile.php${1//./}-frankenphp"
+DOCKER_BUILDKIT=1 docker build --pull . -t outeredge/edge-docker-php-dev:$1-frankenphp -f Dockerfile.php${1//./}-frankenphp && \
+docker push outeredge/edge-docker-php-dev:$1-frankenphp && \
 echo "Complete!"
