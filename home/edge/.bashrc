@@ -60,7 +60,5 @@ export PATH="$PATH:./node_modules/.bin:./vendor/bin:./bin"
 # Set RUNTIME_URL for remote sessions
 [ -z "$RUNTIME_URL" -a -f "/tmp/runtime.url" ] && export RUNTIME_URL=$(cat /tmp/runtime.url)
 
-# Load custom environment variables from .env when CUSTOM_VARS_SET is empty
-if [ -z "$CUSTOM_VARS_SET" -a -f "$WEB_ROOT/.env" ]; then
-    set -a; . $WEB_ROOT/.env; export CUSTOM_VARS_SET=1; set +a
-fi
+# Load custom environment variables
+. /etc/profile.d/edge-env.sh
