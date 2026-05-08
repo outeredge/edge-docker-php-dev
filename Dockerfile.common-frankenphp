@@ -2,7 +2,7 @@ CMD ["/dev.sh"]
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-ENV APP_ENV=development \
+ENV APP_ENV=dev \
     PHP_DISPLAY_ERRORS=On \
     PHP_OPCACHE_VALIDATE=On \
     GLAB_CHECK_UPDATE=false \
