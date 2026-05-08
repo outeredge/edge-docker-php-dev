@@ -14,12 +14,18 @@ if command -v frankenphp >/dev/null 2>&1; then
     case "${1:-}" in
         on)
             [ -f "$OFF" ] && mv "$OFF" "$ON"
-            frankenphp reload --force --config /etc/caddy/Caddyfile
+            # Only reload if not in startup/silent mode
+            if [ "${XDEBUG_QUIET:-}" != "1" ]; then
+                frankenphp reload --force --config /etc/caddy/Caddyfile
+            fi
             echo "Xdebug enabled"
             ;;
         off)
             [ -f "$ON" ] && mv "$ON" "$OFF"
-            frankenphp reload --force --config /etc/caddy/Caddyfile
+            # Only reload if not in startup/silent mode
+            if [ "${XDEBUG_QUIET:-}" != "1" ]; then
+                frankenphp reload --force --config /etc/caddy/Caddyfile
+            fi
             echo "Xdebug disabled"
             ;;
         *) echo "Usage: xdebug [on|off]"; exit 1 ;;
@@ -30,14 +36,20 @@ else
         for f in /etc/php/*/fpm/conf.d/20-xdebug.ini.disabled; do
             [ -f "$f" ] && sudo mv "$f" "${f%.disabled}"
         done
-        sudo supervisorctl restart php-fpm
+        # Only restart if not in startup/silent mode
+        if [ "${XDEBUG_QUIET:-}" != "1" ]; then
+            sudo supervisorctl restart php-fpm
+        fi
         echo "Xdebug enabled"
     elif [ "$1" = "off" ]; then
         # Use wildcard expansion to find the enabled file
         for f in /etc/php/*/fpm/conf.d/20-xdebug.ini; do
             [ -f "$f" ] && sudo mv "$f" "${f}.disabled"
         done
-        sudo supervisorctl restart php-fpm
+        # Only restart if not in startup/silent mode
+        if [ "${XDEBUG_QUIET:-}" != "1" ]; then
+            sudo supervisorctl restart php-fpm
+        fi
         echo "Xdebug disabled"
     else
         echo "Usage: xdebug [on|off]"

@@ -38,6 +38,7 @@ services:
     description: Launches PHP, Nginx and Redis
     commands:
       start: /entrypoint.sh /dev.sh
+      stop: sudo supervisorctl shutdown
     triggeredBy:
       - postEnvironmentStart
 ```
