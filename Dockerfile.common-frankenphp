@@ -52,6 +52,9 @@ RUN apt-get update \
     && find /usr/lib/node_modules/agent-browser/bin -type f -name "agent-browser-*" ! -name "agent-browser-linux-x64" -exec rm -f {} + \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Google Cloud SQL Proxy
+COPY --from=gcr.io/cloud-sql-connectors/cloud-sql-proxy:2 /cloud-sql-proxy /usr/local/bin/cloud-sql-proxy
+
 USER edge
 
 # Install Agent Skills for edge user

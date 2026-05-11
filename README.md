@@ -7,6 +7,7 @@ See the base image [edge-docker-php](https://github.com/outeredge/edge-docker-ph
 | Environment       | Default | Description |
 | -------------     | ------- | --- |
 | XDEBUG_ENABLE     | Off     | Enables the Xdebug PHP extension |
+| ENABLE_SQL_PROXY  | On      | Starts a Google Cloud SQL Auth Proxy |
 
 You can also quickly enable or disable Xdebug on demand using the CLI:
 ```bash
