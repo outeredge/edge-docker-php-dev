@@ -5,6 +5,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV APP_ENV=dev \
     PHP_DISPLAY_ERRORS=On \
     PHP_OPCACHE_VALIDATE=On \
+    npm_config_cache=/home/edge/.npm \
     GLAB_CHECK_UPDATE=false \
     GLAB_SEND_TELEMETRY=false \
     XDEBUG_ENABLE=Off
@@ -15,11 +16,13 @@ COPY templates/20-xdebug.ini /tmp/20-xdebug.ini
 
 RUN apt-get update \
     && apt-get install --no-install-recommends --yes \
+        default-mysql-client \
         imagemagick \
         jq \
+        redis-server \
         rsync \
         sassc \
-        default-mysql-client \
+        supervisor \
         vim \
     && install-php-extensions imagick xdebug \
     # `install-php-extensions xdebug` writes an auto-generated ini into
@@ -51,6 +54,9 @@ RUN apt-get update \
     # Cleanup
     && find /usr/lib/node_modules/agent-browser/bin -type f -name "agent-browser-*" ! -name "agent-browser-linux-x64" -exec rm -f {} + \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Google Cloud SQL Proxy
+COPY --from=gcr.io/cloud-sql-connectors/cloud-sql-proxy:2 /cloud-sql-proxy /usr/local/bin/cloud-sql-proxy
 
 USER edge
 
