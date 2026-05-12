@@ -46,8 +46,8 @@ __bash_prompt() {
 __bash_prompt
 
 # Ona environment setup
-if command -v gitpod > /dev/null 2>&1; then
-    source /ona.sh
+if command -v ona > /dev/null 2>&1 && [ -r /ona.sh ]; then
+    . /ona.sh
 fi
 
 # Enable bash completions for Git and Magerun
@@ -57,8 +57,11 @@ source /etc/profile.d/n98-magerun2.phar.bash
 # Set PATH to include node and composer
 export PATH="$PATH:./node_modules/.bin:./vendor/bin:./bin"
 
-# Set RUNTIME_URL for remote sessions
-[ -z "$RUNTIME_URL" -a -f "/tmp/runtime.url" ] && export RUNTIME_URL=$(cat /tmp/runtime.url)
-
 # Load custom environment variables
 . /etc/profile.d/edge-env.sh
+
+# Set common aliases
+alias magento="$WEB_ROOT/bin/magento"
+alias magerun2="magerun2 --root-dir=$WEB_ROOT"
+alias magerun="magerun2"
+alias nuke="$WEB_ROOT/bin/magento outeredge:nuke"

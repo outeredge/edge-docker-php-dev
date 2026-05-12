@@ -1,6 +1,6 @@
 # edge-docker-php-dev
 
-PHP development image by outer/edge - plays nicely with Ona (Gitpod).
+PHP development image by outer/edge - plays nicely with Ona.
 
 See the base image [edge-docker-php](https://github.com/outeredge/edge-docker-php) for configuration options. The following additional configuration is available with this image:
 
@@ -31,7 +31,7 @@ The `-frankenphp` variants ship Node + bun, so they are a drop-in replacement fo
 |------------|--------------|
 | `docker run <image>` | CMD `/dev.sh` runs with no args → dev.sh setup → defaults to supervisord (multi-proc, all sidecars). |
 | `docker run <image> /dev.sh frankenphp run --config /etc/caddy/Caddyfile` | dev.sh setup → forwards args → launch.sh `exec`s frankenphp directly (single-proc). |
-| `docker run <image> /dev.sh bash` | dev.sh setup (composer/yarn caches, ona, xdebug, runtime URL) → interactive shell via launch.sh. |
+| `docker run <image> /dev.sh bash` | dev.sh setup (ona first-boot, xdebug toggle) → interactive shell via launch.sh. |
 | `docker run <image> bash` | Bypasses dev.sh entirely (CMD overridden) — identical to upstream behavior. |
 
 ## Ona

@@ -5,6 +5,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV APP_ENV=dev \
     PHP_DISPLAY_ERRORS=On \
     PHP_OPCACHE_VALIDATE=On \
+    npm_config_cache=/home/edge/.npm \
     GLAB_CHECK_UPDATE=false \
     GLAB_SEND_TELEMETRY=false \
     XDEBUG_ENABLE=Off

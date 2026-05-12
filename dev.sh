@@ -1,15 +1,9 @@
 #!/bin/bash
 
-export COMPOSER_HOME="/home/$(whoami)/.composer"
-export YARN_CACHE_FOLDER="/home/$(whoami)/.yarn"
-export npm_config_cache="/home/$(whoami)/.npm"
 
-if command -v gitpod > /dev/null 2>&1; then
-    # We are running in Ona (CLI is available)
-    source /ona.sh
+if command -v ona > /dev/null 2>&1 && [ -r /ona.sh ]; then
+    . /ona.sh
 fi
-
-echo "$RUNTIME_URL" > /tmp/runtime.url
 
 if [ "${XDEBUG_ENABLE:-Off}" = "On" ]; then
     XDEBUG_QUIET=1 /usr/local/bin/xdebug on
