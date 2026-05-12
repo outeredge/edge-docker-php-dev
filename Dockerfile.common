@@ -5,7 +5,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV APP_ENV=dev \
     PHP_DISPLAY_ERRORS=On \
     PHP_OPCACHE_VALIDATE=On \
-    ENABLE_SQL_PROXY=On \
     GLAB_CHECK_UPDATE=false \
     GLAB_SEND_TELEMETRY=false \
     XDEBUG_ENABLE=Off
@@ -43,9 +42,6 @@ RUN rm -Rf /etc/php/$PHP_VERSION/cli \
     # Cleanup
     && find /usr/lib/node_modules/agent-browser/bin -type f -name "agent-browser-*" ! -name "agent-browser-linux-x64" -exec rm -f {} + \
     && rm -rf /var/lib/apt/lists/*
-
-# Install Google Cloud SQL Proxy
-COPY --from=gcr.io/cloud-sql-connectors/cloud-sql-proxy:2 /cloud-sql-proxy /usr/local/bin/cloud-sql-proxy
 
 USER edge
 

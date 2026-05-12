@@ -4,8 +4,6 @@ export COMPOSER_HOME="/home/$(whoami)/.composer"
 export YARN_CACHE_FOLDER="/home/$(whoami)/.yarn"
 export npm_config_cache="/home/$(whoami)/.npm"
 
-j2 /templates/sql-proxy.conf.j2 | dd status=none of=/etc/supervisor/conf.d/sql-proxy.conf
-
 if command -v gitpod > /dev/null 2>&1; then
     # We are running in Ona (CLI is available)
     source /ona.sh
