@@ -60,6 +60,6 @@ COPY --from=gcr.io/cloud-sql-connectors/cloud-sql-proxy:2 /cloud-sql-proxy /usr/
 USER edge
 
 # Install Agent Skills for edge user
-RUN npx skills add https://github.com/vercel-labs/agent-browser --skill agent-browser --global --agent universal --yes
+RUN npx skills -y add https://github.com/vercel-labs/agent-browser --skill agent-browser --global --agent universal --yes
 
 COPY --chown=edge . /
