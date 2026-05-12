@@ -5,7 +5,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV APP_ENV=dev \
     PHP_DISPLAY_ERRORS=On \
     PHP_OPCACHE_VALIDATE=On \
-    npm_config_cache=/home/edge/.npm \
+    NPM_CONFIG_CACHE=/home/edge/.npm \
     GLAB_CHECK_UPDATE=false \
     GLAB_SEND_TELEMETRY=false \
     XDEBUG_ENABLE=Off
@@ -38,10 +38,9 @@ RUN apt-get update \
     && chown edge:edge "$PHP_INI_DIR/conf.d" "$PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini.disabled" \
     && curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
     && apt-get install --no-install-recommends --yes nodejs \
-    && npm install --global bun \
-    && npm cache clean --force \
     # Install Grunt, Gulp and Kilo CLI's
-    && npm install --global grunt-cli gulp-cli agent-browser @kilocode/cli @kilocode/cli-linux-x64 --omit=optional --ignore-scripts \
+    && npm install --global bun grunt-cli gulp-cli agent-browser @kilocode/cli @kilocode/cli-linux-x64 --omit=optional --ignore-scripts \
+    && rm -Rf $NPM_CONFIG_CACHE \
     # Install Magerun
     && wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 \
     && chmod +x /usr/local/bin/magerun2 \

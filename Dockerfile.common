@@ -30,6 +30,7 @@ RUN rm -Rf /etc/php/$PHP_VERSION/cli \
     && cp /tmp/20-xdebug.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-xdebug.ini.disabled \
     # Install Grunt, Gulp and Kilo CLI's
     && npm install --global grunt-cli gulp-cli agent-browser @kilocode/cli @kilocode/cli-linux-x64 --omit=optional --ignore-scripts \
+    && rm -Rf $NPM_CONFIG_CACHE \
     # Install Magerun
     && wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 \
     && chmod +x /usr/local/bin/magerun2 \
