@@ -19,11 +19,20 @@ xdebug off
 | Tag                | Base                                       | Web server  | Process model            |
 | ------------------ | ------------------------------------------ | ----------- | ------------------------ |
 | `8.3` / `8.4`      | `outeredge/edge-docker-php:8.x-node`       | nginx       | supervisord (multi-proc) |
-| `8.3-frankenphp` / `8.4-frankenphp` | `outeredge/edge-docker-php:8.x-frankenphp` | FrankenPHP/Caddy | single process (PID 1)   |
+| `8.3-frankenphp` / `8.4-frankenphp` | `outeredge/edge-docker-php:8.x-frankenphp` | FrankenPHP/Caddy | supervisord (multi-proc, runs as `edge`) |
 
-The `-frankenphp` variants ship Node + bun, so they are a drop-in replacement for the existing `:8.x` images for projects that don't depend on supervisord-managed sidecars (e.g. cron, redis sidecar, multiple processes managed by supervisord). `xdebug on` / `xdebug off` work the same way at the user-facing level on both tracks - the script detects which track it's running on and reloads PHP appropriately (FrankenPHP uses `frankenphp reload --force`, the nginx track uses `supervisorctl restart php-fpm`).
+The `-frankenphp` variants ship Node + bun, so they are a drop-in replacement for the existing `:8.x` images. They also include `redis` and `cloud-sql-proxy` managed by a non-root supervisord. These variants run as the unprivileged `edge` user with no `sudo`, no nginx, and no php-fpm. Caddy listens on `${PORT}` (default `8080`).
 
-The FrankenPHP variants run as the unprivileged `edge` user with no `sudo`, no nginx, no php-fpm, and no supervisord. Caddy listens on `${PORT}` (default `8080`).
+**Note for FrankenPHP variants:** `ENABLE_REDIS`, `ENABLE_SQL_PROXY`, `ENABLE_SSH`, and `ENABLE_CRON` are unsupported on the FrankenPHP track. `redis` and `cloud-sql-proxy` are always on. Users needing toggles or sshd/cron should use the non-frankenphp dev variants. Supercronic may be added in the future for non-root cron if demand arises.
+
+## Invocation modes (FrankenPHP track)
+
+| Invocation | What happens |
+|------------|--------------|
+| `docker run <image>` | CMD `/dev.sh` runs with no args → dev.sh setup → defaults to supervisord (multi-proc, all sidecars). |
+| `docker run <image> /dev.sh frankenphp run --config /etc/caddy/Caddyfile` | dev.sh setup → forwards args → launch.sh `exec`s frankenphp directly (single-proc). |
+| `docker run <image> /dev.sh bash` | dev.sh setup (composer/yarn caches, ona, xdebug, runtime URL) → interactive shell via launch.sh. |
+| `docker run <image> bash` | Bypasses dev.sh entirely (CMD overridden) — identical to upstream behavior. |
 
 ## Ona
 
@@ -48,10 +57,11 @@ For the **FrankenPHP** variants (`:8.3-frankenphp`, `:8.4-frankenphp`):
 ```yml
 services:
   servers:
-    name: frankenphp
-    description: Launches FrankenPHP
+    name: supervisord
+    description: Launches FrankenPHP, Redis and SQL Proxy
     commands:
       start: /dev.sh
+      stop: supervisorctl shutdown
     triggeredBy:
       - postEnvironmentStart
 ```
