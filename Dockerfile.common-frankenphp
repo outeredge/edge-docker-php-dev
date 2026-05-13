@@ -18,10 +18,10 @@ RUN apt-get update \
         default-mysql-client \
         imagemagick \
         jq \
-        redis-server \
         rsync \
         sassc \
         supervisor \
+        valkey \
         vim \
     && install-php-extensions imagick xdebug \
     # `install-php-extensions xdebug` writes an auto-generated ini into
