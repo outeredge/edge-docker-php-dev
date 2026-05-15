@@ -14,16 +14,16 @@ if [ ! -z "$DOCKER_PASS" ]; then
     echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 fi;
 
-if [ ! -z "$r" ]; then
-    echo "Building image outeredge/edge-docker-php-dev:$1$r with Dockerfile.php${1//./}"
-    DOCKER_BUILDKIT=1 docker build --pull . -t outeredge/edge-docker-php-dev:$1$r -f Dockerfile.php${1//./} && \
-    docker push outeredge/edge-docker-php-dev:$1$r && \
-    echo "Complete!"
-fi;
+#if [ ! -z "$r" ]; then
+#    echo "Building image outeredge/edge-docker-php-dev:$1$r with Dockerfile.php${1//./}"
+#    DOCKER_BUILDKIT=1 docker build --pull . -t outeredge/edge-docker-php-dev:$1$r -f Dockerfile.php${1//./} && \
+#    docker push outeredge/edge-docker-php-dev:$1$r && \
+#    echo "Complete!"
+#fi;
 
-echo "Building image outeredge/edge-docker-php-dev:$1 with Dockerfile.php${1//./}"
-DOCKER_BUILDKIT=1 docker build --pull . -t outeredge/edge-docker-php-dev:$1 -f Dockerfile.php${1//./} && \
-docker push outeredge/edge-docker-php-dev:$1
+#echo "Building image outeredge/edge-docker-php-dev:$1 with Dockerfile.php${1//./}"
+#DOCKER_BUILDKIT=1 docker build --pull . -t outeredge/edge-docker-php-dev:$1 -f Dockerfile.php${1//./} && \
+#docker push outeredge/edge-docker-php-dev:$1
 
 echo "Building image outeredge/edge-docker-php-dev:$1-frankenphp with Dockerfile.php${1//./}-frankenphp"
 DOCKER_BUILDKIT=1 docker build --pull . -t outeredge/edge-docker-php-dev:$1-frankenphp -f Dockerfile.php${1//./}-frankenphp && \
