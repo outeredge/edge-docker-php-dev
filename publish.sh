@@ -34,6 +34,7 @@ build_magento() {
     DOCKER_BUILDKIT=1 docker build . -t outeredge/edge-docker-php-dev:magento-${magento_ver} \
         -f Dockerfile.magento-frankenphp \
         --build-arg PHP_VERSION=${php_ver} \
+        --build-arg COMPOSER_AUTH=${MAGENTO_COMPOSER_AUTH} \
         --build-arg MAGENTO_VERSION=${magento_ver} && \
     docker push outeredge/edge-docker-php-dev:magento-${magento_ver}
 }
