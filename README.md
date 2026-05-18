@@ -18,14 +18,13 @@ xdebug off
 
 | Tag                | Base                                       | Web server  | Process model            |
 | ------------------ | ------------------------------------------ | ----------- | ------------------------ |
-| `8.3` / `8.4`      | `outeredge/edge-docker-php:8.x-node`       | nginx       | supervisord (multi-proc) |
-| `8.3-frankenphp` / `8.4-frankenphp` | `outeredge/edge-docker-php:8.x-frankenphp` | FrankenPHP/Caddy | supervisord (multi-proc, runs as `edge`) |
+| `8.3-frankenphp` / `8.4-frankenphp` | `outeredge/edge-docker-php:8.x-frankenphp-super` | FrankenPHP/Caddy | supervisord (multi-proc, runs as `edge`) |
 
-The `-frankenphp` variants ship Node + bun, so they are a drop-in replacement for the existing `:8.x` images. They also include `valkey` and `cloud-sql-proxy` managed by a non-root supervisord. These variants run as the unprivileged `edge` user with no `sudo`, no nginx, and no php-fpm. Caddy listens on `${PORT}` (default `8080`).
+The `-frankenphp` variants ship Node + bun. They include `valkey` and `cloud-sql-proxy` managed by a non-root supervisord. These variants run as the unprivileged `edge` user with no `sudo`, no nginx, and no php-fpm. Caddy listens on `${PORT}` (default `8080`).
 
-**Note for FrankenPHP variants:** `ENABLE_VALKEY`, `ENABLE_SQL_PROXY`, `ENABLE_SSH`, and `ENABLE_CRON` are unsupported on the FrankenPHP track. `valkey` and `cloud-sql-proxy` are always on. Users needing toggles or sshd/cron should use the non-frankenphp dev variants. Supercronic may be added in the future for non-root cron if demand arises.
+**Note:** `ENABLE_VALKEY`, `ENABLE_SQL_PROXY`, `ENABLE_SSH`, and `ENABLE_CRON` are currently unsupported toggle switches. `valkey` and `cloud-sql-proxy` are always on.
 
-## Invocation modes (FrankenPHP track)
+## Invocation modes
 
 | Invocation | What happens |
 |------------|--------------|
@@ -37,22 +36,6 @@ The `-frankenphp` variants ship Node + bun, so they are a drop-in replacement fo
 ## Ona
 
 When running in Ona, add the following to your `automations.yaml`.
-
-For the **nginx** variants (`:8.3`, `:8.4`):
-
-```yml
-services:
-  servers:
-    name: supervisord
-    description: Launches PHP, Nginx and Valkey
-    commands:
-      start: /entrypoint.sh /dev.sh
-      stop: sudo supervisorctl shutdown
-    triggeredBy:
-      - postEnvironmentStart
-```
-
-For the **FrankenPHP** variants (`:8.3-frankenphp`, `:8.4-frankenphp`):
 
 ```yml
 services:

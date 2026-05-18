@@ -1,5 +1,0 @@
-# syntax=edrevo/dockerfile-plus
-
-FROM outeredge/edge-docker-php:8.3-node
-
-INCLUDE+ Dockerfile.common

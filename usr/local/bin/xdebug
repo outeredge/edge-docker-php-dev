@@ -1,57 +1,29 @@
 #!/bin/bash
+set -eu
 
-# Dual-track xdebug toggle.
-#   - FrankenPHP track: rename PHP's xdebug ini and hot-reload via
-#     `frankenphp reload --force`. No sudo, no PID 1 restart.
-#   - Legacy nginx + supervisord track: keep the original `sudo sed` +
-#     `sudo supervisorctl restart php-fpm` flow, byte-for-byte.
+# Toggle xdebug by renaming its ini and hot-reloading FrankenPHP via
+# `frankenphp reload --force`. No PID 1 restart needed.
 
-if command -v frankenphp >/dev/null 2>&1; then
-    set -eu
-    INI_DIR="$(php -r 'echo PHP_INI_DIR;')/conf.d"
-    OFF="$INI_DIR/docker-php-ext-xdebug.ini.disabled"
-    ON="$INI_DIR/docker-php-ext-xdebug.ini"
-    case "${1:-}" in
-        on)
-            [ -f "$OFF" ] && mv "$OFF" "$ON"
-            # Only reload if not in startup/silent mode
-            if [ "${XDEBUG_QUIET:-}" != "1" ]; then
-                frankenphp reload --force --config /etc/caddy/Caddyfile
-            fi
-            echo "Xdebug enabled"
-            ;;
-        off)
-            [ -f "$ON" ] && mv "$ON" "$OFF"
-            # Only reload if not in startup/silent mode
-            if [ "${XDEBUG_QUIET:-}" != "1" ]; then
-                frankenphp reload --force --config /etc/caddy/Caddyfile
-            fi
-            echo "Xdebug disabled"
-            ;;
-        *) echo "Usage: xdebug [on|off]"; exit 1 ;;
-    esac
-else
-    if [ "$1" = "on" ]; then
-        # Use wildcard expansion to find the disabled file
-        for f in /etc/php/*/fpm/conf.d/20-xdebug.ini.disabled; do
-            [ -f "$f" ] && sudo mv "$f" "${f%.disabled}"
-        done
-        # Only restart if not in startup/silent mode
+INI_DIR="$(php -r 'echo PHP_INI_DIR;')/conf.d"
+OFF="$INI_DIR/docker-php-ext-xdebug.ini.disabled"
+ON="$INI_DIR/docker-php-ext-xdebug.ini"
+
+case "${1:-}" in
+    on)
+        [ -f "$OFF" ] && mv "$OFF" "$ON"
+        # Only reload if not in startup/silent mode
         if [ "${XDEBUG_QUIET:-}" != "1" ]; then
-            sudo supervisorctl restart php-fpm
+            frankenphp reload --force --config /etc/caddy/Caddyfile
         fi
         echo "Xdebug enabled"
-    elif [ "$1" = "off" ]; then
-        # Use wildcard expansion to find the enabled file
-        for f in /etc/php/*/fpm/conf.d/20-xdebug.ini; do
-            [ -f "$f" ] && sudo mv "$f" "${f}.disabled"
-        done
-        # Only restart if not in startup/silent mode
+        ;;
+    off)
+        [ -f "$ON" ] && mv "$ON" "$OFF"
+        # Only reload if not in startup/silent mode
         if [ "${XDEBUG_QUIET:-}" != "1" ]; then
-            sudo supervisorctl restart php-fpm
+            frankenphp reload --force --config /etc/caddy/Caddyfile
         fi
         echo "Xdebug disabled"
-    else
-        echo "Usage: xdebug [on|off]"
-    fi
-fi
+        ;;
+    *) echo "Usage: xdebug [on|off]"; exit 1 ;;
+esac
