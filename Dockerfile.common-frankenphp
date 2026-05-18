@@ -18,7 +18,6 @@ RUN apt-get update \
         default-mysql-client \
         imagemagick \
         jq \
-        openssh-client \
         rsync \
         sassc \
         vim \
