@@ -20,8 +20,6 @@ RUN apt-get update \
         jq \
         rsync \
         sassc \
-        supervisor \
-        valkey \
         vim \
     && install-php-extensions imagick xdebug \
     # `install-php-extensions xdebug` writes an auto-generated ini into
@@ -52,9 +50,6 @@ RUN apt-get update \
     && find /usr/lib/node_modules/agent-browser/bin -type f -name "agent-browser-*" ! -name "agent-browser-linux-x64" -exec rm -f {} + \
     && rm -rf /var/lib/apt/lists/* \
     && npm cache clean --force
-
-# Install Google Cloud SQL Proxy
-COPY --from=gcr.io/cloud-sql-connectors/cloud-sql-proxy:2 /cloud-sql-proxy /usr/local/bin/cloud-sql-proxy
 
 USER edge
 

@@ -14,4 +14,4 @@ if [ $# -eq 0 ]; then
     set -- /usr/bin/supervisord
 fi
 
-exec /launch.sh "$@"
+exec "$@"
