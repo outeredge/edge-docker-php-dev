@@ -28,10 +28,10 @@ The `-frankenphp` variants ship Node + bun. They include `valkey` and `cloud-sql
 
 | Invocation | What happens |
 |------------|--------------|
-| `docker run <image>` | CMD `/dev.sh` runs with no args → dev.sh setup → defaults to supervisord (multi-proc, all sidecars). |
-| `docker run <image> /dev.sh frankenphp run --config /etc/caddy/Caddyfile` | dev.sh setup → forwards args → launch.sh `exec`s frankenphp directly (single-proc). |
-| `docker run <image> /dev.sh bash` | dev.sh setup (ona first-boot, xdebug toggle) → interactive shell via launch.sh. |
-| `docker run <image> bash` | Bypasses dev.sh entirely (CMD overridden) — identical to upstream behavior. |
+| `docker run <image>` | ENTRYPOINT `/launch.sh` runs CMD `/dev.sh` → dev.sh setup (ona/xdebug) → defaults to supervisord (multi-proc, all sidecars). |
+| `docker run <image> /dev.sh frankenphp run --config /etc/caddy/Caddyfile` | launch.sh execs `/dev.sh frankenphp …` → dev.sh setup → execs frankenphp directly (single-proc). |
+| `docker run <image> /dev.sh bash` | launch.sh execs `/dev.sh bash` → dev.sh setup (ona first-boot, xdebug toggle) → interactive shell. |
+| `docker run <image> bash` | launch.sh execs `bash` directly — dev.sh is bypassed (CMD overridden), identical to upstream behaviour. |
 
 ## Ona
 
