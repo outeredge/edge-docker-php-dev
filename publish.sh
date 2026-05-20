@@ -12,7 +12,7 @@ PHP_VERSIONS=("8.3" "8.4")
 
 if [ -z "$MAGENTO_COMPOSER_AUTH" ]; then
     echo "No \$MAGENTO_COMPOSER_AUTH value set, exiting!"
-    exit
+    exit 1
 fi;
 
 if [ ! -z "$DOCKER_PASS" ]; then
@@ -42,21 +42,26 @@ build_magento() {
 if [ -z "$1" ]; then
     echo "No version specified, building all from configuration..."
     for php_ver in "${PHP_VERSIONS[@]}"; do
-        build_php "$php_ver"
+        build_php "$php_ver" || { echo "Build failed for PHP $php_ver"; exit 1; }
     done
     for magento_ver in "${!MAGENTO_VERSIONS[@]}"; do
-        build_magento "$magento_ver"
+        build_magento "$magento_ver" || { echo "Build failed for Magento $magento_ver"; exit 1; }
     done
 else
-    # If a specific PHP version is provided, build that and its dependent Magento versions
-    php_ver=$1
-    build_php "$php_ver"
-    
-    for magento_ver in "${!MAGENTO_VERSIONS[@]}"; do
-        if [ "${MAGENTO_VERSIONS[$magento_ver]}" == "$php_ver" ]; then
-            build_magento "$magento_ver"
-        fi
-    done
+    # Check if the argument is a known Magento version
+    if [ ! -z "${MAGENTO_VERSIONS[$1]}" ]; then
+        build_magento "$1" || { echo "Build failed for Magento $1"; exit 1; }
+    else
+        # If a specific PHP version is provided, build that and its dependent Magento versions
+        php_ver=$1
+        build_php "$php_ver" || { echo "Build failed for PHP $php_ver"; exit 1; }
+        
+        for magento_ver in "${!MAGENTO_VERSIONS[@]}"; do
+            if [ "${MAGENTO_VERSIONS[$magento_ver]}" == "$php_ver" ]; then
+                build_magento "$magento_ver" || { echo "Build failed for Magento $magento_ver"; exit 1; }
+            fi
+        done
+    fi
 fi
 
 echo "Complete!"
