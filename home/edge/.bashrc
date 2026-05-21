@@ -1,5 +1,5 @@
 # Inspired by https://github.com/devcontainers/features/blob/main/src/common-utils
-# the default .bashrc for mcr.microsoft.com/devcontainers/base:ubuntu-24.04, simplified with tweaks for Ona
+# the default .bashrc for mcr.microsoft.com/devcontainers/base:ubuntu-24.04
 
 # If not running interactively, don't do anything
 case $- in
@@ -45,10 +45,8 @@ __bash_prompt() {
 }
 __bash_prompt
 
-# Ona environment setup
-if command -v ona > /dev/null 2>&1 && [ -r /ona.sh ]; then
-    . /ona.sh
-fi
+# Remote workspace environment setup
+. /workspace.sh
 
 # Enable bash completions for Git and Magerun
 source /usr/share/bash-completion/completions/git

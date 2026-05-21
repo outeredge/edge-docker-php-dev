@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Environment variables setup for remote workspaces (memoized to avoid repeated CLI calls)
+WORKSPACE_ENV_CACHE=/tmp/workspace-env.cache
+if [ -r "$WORKSPACE_ENV_CACHE" ]; then
+    . "$WORKSPACE_ENV_CACHE"
+else
+    if command -v headless > /dev/null 2>&1; then
+        WEB_ROOT=$(headless me | jq -r '.workspacePath')
+        RUNTIME_URL="$(headless preview 8080 --raw)/"
+    elif command -v ona > /dev/null 2>&1; then
+        : "${RUNTIME_URL:=$(ona environment port open 8080 --name web)/}"
+        WEB_ROOT=$(find /workspaces/ -maxdepth 1 -mindepth 1 -type d -not -name ".*" | head -n 1)
+    fi
+
+    if [ -n "$WEB_ROOT" ]; then
+        {
+            printf 'export RUNTIME_URL=%q\n' "$RUNTIME_URL"
+            printf 'export WEB_ROOT=%q\n'    "$WEB_ROOT"
+            printf "export EDITOR='code --wait'\n"
+        } > "$WORKSPACE_ENV_CACHE"
+        . "$WORKSPACE_ENV_CACHE"
+    fi
+fi
