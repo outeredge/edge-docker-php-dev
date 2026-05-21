@@ -55,7 +55,8 @@ source /etc/profile.d/n98-magerun2.phar.bash
 # Set PATH to include node and composer
 export PATH="$PATH:./node_modules/.bin:./vendor/bin:./bin"
 
-# Load custom environment variables
+# Re-load $WEB_ROOT/.env now that workspace.sh has populated RUNTIME_URL and WEB_ROOT
+unset CUSTOM_VARS_SET
 . /etc/profile.d/edge-env.sh
 
 # Set common aliases
