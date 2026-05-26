@@ -5,15 +5,24 @@ WORKSPACE_ENV_CACHE=/tmp/workspace-env.cache
 if [ -r "$WORKSPACE_ENV_CACHE" ]; then
     . "$WORKSPACE_ENV_CACHE"
 else
+    CACHE_READY=false
+
     if command -v headless > /dev/null 2>&1; then
-        WEB_ROOT=$(headless me | jq -r '.workspacePath')
-        RUNTIME_URL="$(headless preview 8080 --raw)/"
+        if RAW_ME=$(headless me) && RAW_PREVIEW=$(headless preview 8080 --raw); then
+            WEB_ROOT=$(echo "$RAW_ME" | jq -r '.workspacePath')
+            RUNTIME_URL="$RAW_PREVIEW/"
+            CACHE_READY=true
+        fi
     elif command -v ona > /dev/null 2>&1; then
-        : "${RUNTIME_URL:=$(ona environment port open 8080 --name web)/}"
-        WEB_ROOT=$(find /workspaces/ -maxdepth 1 -mindepth 1 -type d -not -name ".*" | head -n 1)
+        if RAW_PORT=$(ona environment port open 8080 --name web); then
+            : "${RUNTIME_URL:=$RAW_PORT/}"
+            WEB_ROOT=$(find /workspaces/ -maxdepth 1 -mindepth 1 -type d -not -name ".*" | head -n 1)
+            CACHE_READY=true
+        fi
     fi
 
-    if [ -n "$WEB_ROOT" ]; then
+    # Only write the cache if the commands succeeded AND a WEB_ROOT was found
+    if [ "$CACHE_READY" = true ] && [ -n "$WEB_ROOT" ]; then
         {
             printf 'export RUNTIME_URL=%q\n' "$RUNTIME_URL"
             printf 'export WEB_ROOT=%q\n'    "$WEB_ROOT"
