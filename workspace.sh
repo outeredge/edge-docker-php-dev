@@ -8,9 +8,12 @@ else
     CACHE_READY=false
 
     if command -v meldit > /dev/null 2>&1; then
-        if RAW_ME=$(meldit me) && RAW_PREVIEW=$(meldit port 8080 --public --raw); then
+        if RAW_ME=$(meldit me); then
             WEB_ROOT=$(echo "$RAW_ME" | jq -r '.workspacePath')
-            RUNTIME_URL="$RAW_PREVIEW/"
+            RUNTIME_URL=$(echo "$RAW_ME" | jq -r '.ports[] | select(.port == 8080) | .url')/
+            if [ -z "$RUNTIME_URL" ]; then
+                RUNTIME_URL=$(meldit port 8080 --public --raw)/
+            fi
             CACHE_READY=true
         fi
     elif command -v ona > /dev/null 2>&1; then
