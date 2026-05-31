@@ -11,9 +11,6 @@ else
         if RAW_ME=$(meldit me); then
             WEB_ROOT=$(echo "$RAW_ME" | jq -r '.workspacePath')
             RUNTIME_URL=$(echo "$RAW_ME" | jq -r '.ports[] | select(.port == 8080) | .url')/
-            if [ -z "$RUNTIME_URL" ]; then
-                RUNTIME_URL=$(meldit port 8080 --public --raw)/
-            fi
             CACHE_READY=true
         fi
     elif command -v ona > /dev/null 2>&1; then
@@ -24,8 +21,8 @@ else
         fi
     fi
 
-    # Only write the cache if the commands succeeded AND a WEB_ROOT was found
-    if [ "$CACHE_READY" = true ] && [ -n "$WEB_ROOT" ]; then
+    # Only write the cache if the commands succeeded AND a WEB_ROOT/RUNTIME_URL was found
+    if [ "$CACHE_READY" = true ] && [ -n "$WEB_ROOT" ] && [ -n "$RUNTIME_URL" ]; then
         {
             printf 'export RUNTIME_URL=%q\n' "$RUNTIME_URL"
             printf 'export WEB_ROOT=%q\n'    "$WEB_ROOT"
