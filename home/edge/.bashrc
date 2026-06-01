@@ -8,13 +8,12 @@ case $- in
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
 HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
 shopt -s histappend
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+# for setting history length
 HISTSIZE=1000
 HISTFILESIZE=2000
 
@@ -23,7 +22,7 @@ eval "$(dircolors -b)"
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
-# bash theme - partly inspired by https://github.com/ohmyzsh/ohmyzsh/blob/master/themes/robbyrussell.zsh-theme
+# bash theme
 __bash_prompt() {
     local lastcmdstatus='`export XIT=$? \
         && [ "$XIT" -ne "0" ] && echo -n "\[\033[1;31m\]  " || echo -n "  "`'
@@ -45,19 +44,9 @@ __bash_prompt() {
 }
 __bash_prompt
 
-# Remote workspace environment setup
-. /workspace.sh
-
-# Enable bash completions for Git and Magerun
+# Enable bash completions
 source /usr/share/bash-completion/completions/git
 source /etc/profile.d/n98-magerun2.phar.bash
-
-# Set PATH to include node and composer
-export PATH="$PATH:./node_modules/.bin:./vendor/bin:./bin"
-
-# Re-load $WEB_ROOT/.env now that workspace.sh has populated RUNTIME_URL and WEB_ROOT
-unset CUSTOM_VARS_SET
-. /etc/profile.d/edge-env.sh
 
 # Set common aliases
 alias magento="$WEB_ROOT/bin/magento"
@@ -65,5 +54,11 @@ alias magerun2="magerun2 --root-dir=$WEB_ROOT"
 alias magerun="magerun2"
 alias nuke="$WEB_ROOT/bin/magento outeredge:nuke"
 alias mysql="mysql --skip-ssl"
-alias code="code-server"
 alias redis-cli="valkey-cli"
+
+alias code="code-server"
+
+# Set EDITOR to VS Code only if running inside VS Code's integrated terminal
+if [ "$TERM_PROGRAM" = "vscode" ] || [ -n "$VSCODE_IPC_HOOK_CLI" ]; then
+    export EDITOR="code --wait"
+fi
