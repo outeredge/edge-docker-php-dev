@@ -7,8 +7,6 @@ FROM outeredge/edge-docker-php-dev:${PHP_VERSION}-frankenphp
 ARG MAGENTO_VERSION
 ARG COMPOSER_AUTH
 
-COPY . /
-
 ENV MAGENTO_VERSION=${MAGENTO_VERSION} \
     CADDY_CONF=magento \
     WEB_PUBLIC=/pub
