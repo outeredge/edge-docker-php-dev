@@ -35,6 +35,8 @@ RUN apt-get update \
     && chown edge:edge "$PHP_INI_DIR/conf.d" "$PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini.disabled" \
     && curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
     && apt-get install --no-install-recommends --yes nodejs \
+    # Enable our profile.d script before the base images
+    && sed -i '/edge-env.sh/i . /etc/profile.d/00-workspace-env.sh' /etc/bash.bashrc \
     # Install code-server
     && curl -fsSL https://code-server.dev/install.sh | sh \
     # Install Grunt, Gulp and Kilo CLI's
@@ -52,7 +54,7 @@ RUN apt-get update \
     && find /usr/lib/node_modules/agent-browser/bin -type f -name "agent-browser-*" ! -name "agent-browser-linux-x64" -exec rm -f {} + \
     && rm -rf /var/lib/apt/lists/* \
     && npm cache clean --force
-
+RUN sed -i '/edge-env.sh/i . /etc/profile.d/custom-env.sh' /etc/bash.bashrc
 USER edge
 
 # Install Agent Skills for edge user
