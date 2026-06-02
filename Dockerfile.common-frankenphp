@@ -54,7 +54,7 @@ RUN apt-get update \
     && find /usr/lib/node_modules/agent-browser/bin -type f -name "agent-browser-*" ! -name "agent-browser-linux-x64" -exec rm -f {} + \
     && rm -rf /var/lib/apt/lists/* \
     && npm cache clean --force
-RUN sed -i '/edge-env.sh/i . /etc/profile.d/custom-env.sh' /etc/bash.bashrc
+
 USER edge
 
 # Install Agent Skills for edge user
