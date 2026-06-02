@@ -46,7 +46,6 @@ __bash_prompt
 
 # Enable bash completions
 source /usr/share/bash-completion/completions/git
-source /etc/profile.d/n98-magerun2.phar.bash
 
 # Set common aliases
 alias magento="$WEB_ROOT/bin/magento"
