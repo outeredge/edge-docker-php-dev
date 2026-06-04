@@ -1,5 +1,7 @@
 # Inspired by https://github.com/devcontainers/features/blob/main/src/common-utils
-# the default .bashrc for mcr.microsoft.com/devcontainers/base:ubuntu-24.04
+
+source /etc/profile.d/00-workspace-env.sh
+source /etc/profile.d/edge-env.sh
 
 # If not running interactively, don't do anything
 case $- in
