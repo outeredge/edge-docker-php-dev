@@ -56,10 +56,9 @@ alias magerun="magerun2"
 alias nuke="$WEB_ROOT/bin/magento outeredge:nuke"
 alias mysql="mysql --skip-ssl"
 alias redis-cli="valkey-cli"
-
 alias code="code-server"
 
 # Set EDITOR to VS Code only if running inside VS Code's integrated terminal
 if [ "$TERM_PROGRAM" = "vscode" ] || [ -n "$VSCODE_IPC_HOOK_CLI" ]; then
-    export EDITOR="code --wait"
+    export EDITOR="code-server --wait"
 fi
