@@ -33,18 +33,3 @@ The `-frankenphp` variants ship Node + bun. They include `valkey` and `cloud-sql
 | `docker run <image> /dev.sh bash` | launch.sh execs `/dev.sh bash` → dev.sh setup (ona first-boot, xdebug toggle) → interactive shell. |
 | `docker run <image> bash` | launch.sh execs `bash` directly — dev.sh is bypassed (CMD overridden), identical to upstream behaviour. |
 
-## Ona
-
-When running in Ona, add the following to your `automations.yaml`.
-
-```yml
-services:
-  servers:
-    name: supervisord
-    description: Launches FrankenPHP, Valkey and SQL Proxy
-    commands:
-      start: /dev.sh
-      stop: supervisorctl shutdown
-    triggeredBy:
-      - postEnvironmentStart
-```
