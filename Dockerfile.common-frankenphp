@@ -57,7 +57,4 @@ RUN apt-get update \
 
 USER edge
 
-# Install Agent Skills for edge user
-RUN npx -y skills add https://github.com/vercel-labs/agent-browser --skill agent-browser --global --agent universal --yes
-
 COPY --chown=edge . /
