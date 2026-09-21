@@ -39,7 +39,7 @@ __bash_prompt() {
         fi`'
     local lightblue='\[\033[1;34m\]'
     local removecolor='\[\033[0m\]'
-    local cleandir='`echo -n "${PWD/\/workspaces\//}"`'
+    local cleandir='`p="${PWD}"; if [[ "$p" == "$HOME"* ]]; then echo -n "~${p#$HOME}"; else echo -n "${p#/workspaces/}"; fi`'
 
     PS1="${lastcmdstatus}${lightblue}${cleandir}${gitbranch}${removecolor}\$ "
     unset -f __bash_prompt
