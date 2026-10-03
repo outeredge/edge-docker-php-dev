@@ -42,6 +42,7 @@ RUN apt-get update \
     && curl -fsSL https://code-server.dev/install.sh | sh \
     # Install Grunt, Gulp and Kilo CLI's
     && npm install --global bun grunt-cli gulp-cli agent-browser @kilocode/cli @kilocode/cli-linux-x64 --omit=optional --ignore-scripts \
+    && chmod +x /usr/lib/node_modules/agent-browser/bin/agent-browser-linux-x64 \
     # Install Magerun
     && wget https://files.magerun.net/n98-magerun2.phar -O /usr/local/bin/magerun2 \
     && chmod +x /usr/local/bin/magerun2 \
