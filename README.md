@@ -20,7 +20,7 @@ xdebug off
 | ------------------ | ------------------------------------------ | ----------- | ------------------------ |
 | `8.3-frankenphp` / `8.4-frankenphp` | `outeredge/edge-docker-php:8.x-frankenphp-super` | FrankenPHP/Caddy | supervisord (multi-proc, runs as `edge`) |
 
-The `-frankenphp` variants ship Node + bun. They include `valkey` and `cloud-sql-proxy` managed by a non-root supervisord. These variants run as the unprivileged `edge` user with no `sudo`, no nginx, and no php-fpm. Caddy listens on `${PORT}` (default `8080`).
+The `-frankenphp` variants ship Node. They include `valkey` and `cloud-sql-proxy` managed by a non-root supervisord. These variants run as the unprivileged `edge` user with no `sudo`, no nginx, and no php-fpm. Caddy listens on `${PORT}` (default `8080`).
 
 **Note:** `ENABLE_VALKEY`, `ENABLE_SQL_PROXY`, `ENABLE_SSH`, and `ENABLE_CRON` are currently unsupported toggle switches. `valkey` and `cloud-sql-proxy` are always on.
 
